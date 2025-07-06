@@ -297,4 +297,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuizScreen;
+export default LessonQuizScreen;

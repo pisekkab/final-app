@@ -9,7 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import HomeScreen from './screens/HomeScreen';
 import LessonListScreen from './screens/LessonListScreen';
 import LessonDetailScreen from './screens/LessonDetailScreen';
-import QuizScreen from './screens/QuizScreen'; // <--- เพิ่มบรรทัดนี้
+import QuizScreen from './screens/LessonQuizScreen'; // <--- เพิ่มบรรทัดนี้
 
 // รักษา splash screen ไว้จนกว่าจะพร้อม
 SplashScreen.preventAutoHideAsync();
