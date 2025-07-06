@@ -1,4 +1,3 @@
-// screens/HomeScreen.js
 import React, { useEffect } from 'react';
 import {
   View,
@@ -6,92 +5,52 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ScrollView,
   SafeAreaView,
   Dimensions,
 } from 'react-native';
-import { useTheme } from '@react-navigation/native'; // นำเข้า useTheme
-import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from 'expo-splash-screen'; // Keep for consistency, though its direct use might change
 
 const { width } = Dimensions.get('window');
 
 const HomeScreen = ({ navigation }) => {
-  const { colors } = useTheme(); // ดึงสีจาก theme
-
   useEffect(() => {
-    async function hideSplash() {
-      await SplashScreen.hideAsync();
-    }
-    hideSplash();
+    // No longer explicitly hiding splash screen here, App.js manages preventAutoHideAsync
+    // If the image itself is the splash screen, this component might load *after* it.
+    // If it's the home screen, the splash screen should have already hidden.
+    // For now, removing the direct hide here.
+    // You might manage SplashScreen.hideAsync() in App.js or a loading component.
   }, []);
 
-  const handleLessonPress = () => {
+  const handleStartPress = () => {
+    // Assuming 'Start!' button navigates to the main part of the app, e.g., LessonList
     navigation.navigate('LessonList');
   };
 
-  // อาจจะเพิ่มปุ่ม Login/Profile หากมีระบบผู้ใช้
-  const handleLoginPress = () => {
-    // navigation.navigate('Login'); // หรือหน้าโปรไฟล์
-    alert('ฟีเจอร์ Login กำลังพัฒนา :)');
-  };
-
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.header}>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.content}>
           <Image
-            source={require('../assets/images/logo.png')} // ตรวจสอบเส้นทางของ logo ของคุณ
-            style={styles.logo}
+            source={require('../assets/images/logo.png')} // Using the provided image as the main visual
+            style={styles.container}
             resizeMode="contain"
           />
-          <Text style={[styles.appName, { color: colors.text }]}>📘 ภาษาอังกฤษ</Text>
-          <Text style={[styles.subtitle, { color: colors.text }]}>เรียนรู้ได้ทุกที่ทุกเวลา 💡</Text>
-        </View>
+          {/* Based on the image, the text below the FluentUp logo */}
+          <Text style={styles.appName}>
+            (อีโมจิ) FluentUp (อีโมจิ)
+          </Text>
+          <Text style={styles.subtitle}>
+            Foreign Language Department
+          </Text>
+          <Text style={styles.subtitle}>
+            Chiangkhan School
+          </Text>
 
-        <View style={styles.contentContainer}>
-          <View style={[styles.welcomeCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.welcomeTitle, { color: colors.text }]}>
-              👋 ยินดีต้อนรับสู่แอปเรียนรู้ภาษาอังกฤษ!
-            </Text>
-            <Text style={[styles.welcomeText, { color: colors.text }]}>
-              แอปพลิเคชันนี้จะช่วยให้คุณเข้าถึงบทเรียนได้ง่ายๆ เพียงปลายนิ้วสัมผัส {'\n'}เริ่มเรียนรู้ได้เลย!
-            </Text>
-            <TouchableOpacity
-              style={[styles.lessonButton, { backgroundColor: colors.primary }]}
-              onPress={handleLessonPress}
-            >
-              <Text style={styles.lessonButtonText}>🚀 เริ่มบทเรียน</Text>
-            </TouchableOpacity>
-          </View>
-
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>✨ คุณสมบัติเด่น</Text>
-          <View style={styles.featuresContainer}>
-            <View style={[styles.featureCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <Text style={[styles.featureIcon, { color: colors.accent }]}>📖</Text>
-              <Text style={[styles.featureTitle, { color: colors.text }]}>บทเรียนหลากหลาย</Text>
-              <Text style={[styles.featureDescription, { color: colors.text }]}>ครอบคลุมหัวข้อที่จำเป็นสำหรับการสนทนาในชีวิตประจำวัน</Text>
-            </View>
-            <View style={[styles.featureCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <Text style={[styles.featureIcon, { color: colors.accent }]}>🧠</Text>
-              <Text style={[styles.featureTitle, { color: colors.text }]}>แบบทดสอบสนุกๆ</Text>
-              <Text style={[styles.featureDescription, { color: colors.text }]}>ทบทวนความรู้และทดสอบความเข้าใจหลังจากเรียน</Text>
-            </View>
-            <View style={[styles.featureCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <Text style={[styles.featureIcon, { color: colors.accent }]}>📱</Text>
-              <Text style={[styles.featureTitle, { color: colors.text }]}>เรียนรู้ทุกที่ทุกเวลา</Text>
-              <Text style={[styles.featureDescription, { color: colors.text }]}>ออกแบบมาเพื่อการเรียนรู้บนมือถือโดยเฉพาะ</Text>
-            </View>
-          </View>
-
-          {/* ปุ่มเสริมอื่นๆ เช่น เข้าสู่ระบบ */}
-          <TouchableOpacity
-            style={[styles.loginButton, { backgroundColor: colors.border }]}
-            onPress={handleLoginPress}
-          >
-            <Text style={[styles.loginButtonText, { color: colors.text }]}>👤 เข้าสู่ระบบ / ลงทะเบียน</Text>
+          <TouchableOpacity style={styles.startButton} onPress={handleStartPress}>
+            <Text style={styles.startButtonText}>Start!</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -99,132 +58,48 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    backgroundColor: '#FFFFFF', // White background as per the image
   },
-  scrollContent: {
-    flexGrow: 1,
-    paddingVertical: 20,
-    alignItems: 'center',
+  container: {
+    flex: 1,
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center',     // Center content horizontally
+    backgroundColor: '#FFFFFF', // White background
   },
-  header: {
-    alignItems: 'center',
-    marginBottom: 30,
-    width: '90%',
+  content: {
+    alignItems: 'center', // Center items within this view
+    padding: 20,
+    width: '80%', // Adjust width as needed
   },
-  logo: {
-    width: width * 0.4,
-    height: width * 0.4,
-    marginBottom: 10,
+  mainImage: {
+    width: Dimensions.get('window').width * 0.7, // Make it responsive
+    height: Dimensions.get('window').width * 0.7, // Make it responsive, assuming square
+    marginBottom: 20,
   },
   appName: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    fontFamily: 'sans-serif-medium',
+    color: '#000000', // Black text
     marginBottom: 5,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
-    fontFamily: 'sans-serif-light',
+    color: '#555555', // Grey text
     textAlign: 'center',
-    lineHeight: 22,
+    marginBottom: 2,
   },
-  contentContainer: {
-    width: '90%',
-    alignItems: 'center',
+  startButton: {
+    backgroundColor: '#00008B', // Dark blue as seen in the image
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 5,
+    marginTop: 40, // Space from text
   },
-  welcomeCard: {
-    width: '100%',
-    borderRadius: 20,
-    padding: 25,
-    marginBottom: 30,
-    borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  welcomeTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  welcomeText: {
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  lessonButton: {
-    paddingVertical: 15,
-    borderRadius: 15,
-    alignItems: 'center',
-    width: '80%',
-    alignSelf: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  lessonButtonText: {
-    color: '#ffffff',
+  startButtonText: {
+    color: '#ffffff', // White text
     fontWeight: 'bold',
     fontSize: 18,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  featuresContainer: {
-    width: '100%',
-    marginBottom: 30,
-    gap: 15, // ใช้ gap แทน marginBottom ในแต่ละ card
-  },
-  featureCard: {
-    borderRadius: 15,
-    padding: 20,
-    borderWidth: 1,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  featureIcon: {
-    fontSize: 40,
-    marginBottom: 10,
-  },
-  featureTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    textAlign: 'center',
-  },
-  featureDescription: {
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#666',
-  },
-  loginButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 20,
-    borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 2,
-  },
-  loginButtonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 });
 

@@ -1,4 +1,3 @@
-// screens/LessonDetailScreen.js
 import React from 'react';
 import {
   View,
@@ -9,21 +8,19 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { useTheme } from '@react-navigation/native'; // นำเข้า useTheme
-import { Ionicons } from '@expo/vector-icons'; // สำหรับใช้ไอคอน
 
 const LessonDetailScreen = ({ route, navigation }) => {
-  const { lesson, lessonId, title } = route.params;
-  const { colors } = useTheme(); // ดึงสีจาก theme
+  const { lesson } = route.params;
 
   // ข้อมูลเนื้อหาบทเรียนสำหรับแต่ละ ID
+  // คุณสามารถเพิ่มข้อมูลสำหรับบทเรียนอื่นๆ ได้ที่นี่
   const lessonContent = {
     '1': { // สำหรับ lessonId: '1' (New Friends)
-      mainTitle: 'New Friends',
+      mainTitle: 'New Friends', // ชื่อหลักสำหรับหน้าจอ
       sections: [
         {
           type: 'header',
-          icon: require('../assets/images/new_friends.png'), // ใช้ไอคอนเฉพาะบทเรียน
+          icon: require('../assets/images/new_friends.png'), // Placeholder for conversation icon. **คุณต้องมีไฟล์ภาพนี้ใน assets/images**
           title: 'Conversation Lesson: New Friends',
         },
         {
@@ -43,29 +40,30 @@ const LessonDetailScreen = ({ route, navigation }) => {
           ],
         },
         {
-          type: 'dialogue',
-          title: 'Part 2: Dialogue',
+          type: 'conversation',
+          title: 'Part 2: Conversation Practice',
           dialogues: [
-            { speaker: 'A', text: 'Hi! My name is Lisa. Nice to meet you.', icon: require('../assets/images/person_icon_1.png') },
-            { speaker: 'B', text: 'Hi Lisa! Nice to meet you too. I’m Ben.', icon: require('../assets/images/person_icon_2.png') },
-            { speaker: 'A', text: 'Where are you from, Ben?', icon: require('../assets/images/person_icon_1.png') },
-            { speaker: 'B', text: 'I’m from Thailand. How about you?', icon: require('../assets/images/person_icon_2.png') },
-            { speaker: 'A', text: 'I’m from Japan. How old are you?', icon: require('../assets/images/person_icon_1.png') },
-            { speaker: 'B', text: 'I’m 13 years old. And you?', icon: require('../assets/images/person_icon_2.png') },
-            { speaker: 'A', text: 'I’m 14. What do you like to do in your free time?', icon: require('../assets/images/person_icon_1.png') },
-            { speaker: 'B', text: 'I like playing football. Do you have any hobbies?', icon: require('../assets/images/person_icon_2.png') },
-            { speaker: 'A', text: 'Yes, I like reading books.', icon: require('../assets/images/person_icon_1.png') },
+            { speaker: 'A', text: "Hi! I'm Anna. What's your name?" },
+            { speaker: 'B', text: "I'm Ben. Nice to meet you!" },
+            { speaker: 'A', text: "Nice to meet you too. How old are you?" },
+            { speaker: 'B', text: "I'm 13. And you?" },
+            { speaker: 'A', text: "I'm 14. Where are you from?" },
+            { speaker: 'B', text: "I'm from Thailand. You?" },
+            { speaker: 'A', text: "I'm from Singapore." },
+            { speaker: 'B', text: "What do you like to do?" },
+            { speaker: 'A', text: "I like playing badminton. What about you?" },
+            { speaker: 'B', text: "Cool! I like drawing." },
           ],
         },
       ],
     },
-    '2': {
+    '2': { // สำหรับ lessonId: '2' (At School)
       mainTitle: 'At School',
       sections: [
         {
           type: 'header',
-          icon: require('../assets/images/icon_at_school.png'),
-          title: 'Lesson: At School',
+          icon: require('../assets/images/at_school.png'), // ใช้ไอคอนโรงเรียน
+          title: 'Conversation Lesson: At School',
         },
         {
           type: 'vocabulary',
@@ -76,72 +74,77 @@ const LessonDetailScreen = ({ route, navigation }) => {
             { english: 'student', thai: 'นักเรียน' },
             { english: 'classroom', thai: 'ห้องเรียน' },
             { english: 'book', thai: 'หนังสือ' },
-            { english: 'pencil', thai: 'ดินสอ' },
             { english: 'desk', thai: 'โต๊ะ' },
             { english: 'chair', thai: 'เก้าอี้' },
-            { english: 'study', thai: 'เรียน' },
-            { english: 'learn', thai: 'เรียนรู้' },
+            { english: 'pencil', thai: 'ดินสอ' },
+            { english: 'pen', thai: 'ปากกา' },
+            { english: 'notebook', thai: 'สมุด' },
           ],
         },
         {
-          type: 'content',
-          title: 'Part 2: Common Phrases',
-          content: `
-            Here are some common phrases you might use at school:
-            - "Good morning, teacher!"
-            - "Can I ask a question?"
-            - "May I go to the restroom?"
-            - "Please open your books to page 10."
-            - "It's time for recess."
-          `,
+          type: 'conversation',
+          title: 'Part 2: Conversation Practice',
+          dialogues: [
+            { speaker: 'A', text: "Good morning, Ben!" },
+            { speaker: 'B', text: "Good morning, Anna!" },
+            { speaker: 'A', text: "Are you ready for school today?" },
+            { speaker: 'B', text: "Yes, I am! I have my books and pencils." },
+            { speaker: 'A', text: "What's your favorite subject?" },
+            { speaker: 'B', text: "I like English. How about you?" },
+            { speaker: 'A', text: "I like Math. Let's go to class." },
+            { speaker: 'B', text: "Ok!" },
+          ],
         },
       ],
     },
-    '3': {
+    '3': { // สำหรับ lessonId: '3' (At a Restaurant)
       mainTitle: 'At a Restaurant',
       sections: [
         {
           type: 'header',
-          icon: require('../assets/images/at_restaurant.png'),
-          title: 'Lesson: At a Restaurant',
+          icon: require('../assets/images/at_restaurant.png'), // ใช้ไอคอนร้านอาหาร
+          title: 'Conversation Lesson: At a Restaurant',
         },
         {
           type: 'vocabulary',
           title: 'Part 1: Vocabulary',
           data: [
             { english: 'restaurant', thai: 'ร้านอาหาร' },
-            { english: 'menu', thai: 'เมนู' },
             { english: 'waiter/waitress', thai: 'บริกร' },
+            { english: 'menu', thai: 'เมนูอาหาร' },
             { english: 'order', thai: 'สั่ง' },
-            { english: 'bill', thai: 'บิล/ใบเสร็จ' },
             { english: 'delicious', thai: 'อร่อย' },
+            { english: 'bill', thai: 'บิล/ใบเสร็จ' },
             { english: 'table', thai: 'โต๊ะ' },
+            { english: 'chef', thai: 'พ่อครัว' },
             { english: 'reservation', thai: 'การจอง' },
             { english: 'tip', thai: 'ทิป' },
-            { english: 'dish', thai: 'จาน/อาหาร' },
           ],
         },
         {
-          type: 'content',
-          title: 'Part 2: Ordering Food',
-          content: `
-            When you're at a restaurant, you'll need to know how to order food.
-            - "May I see the menu, please?"
-            - "I would like to order..."
-            - "What do you recommend?"
-            - "Can I get the bill, please?"
-            - "This is delicious!"
-          `,
+          type: 'conversation',
+          title: 'Part 2: Conversation Practice',
+          dialogues: [
+            { speaker: 'A', text: "Welcome! Do you have a reservation?" },
+            { speaker: 'B', text: "No, we don't. A table for two, please." },
+            { speaker: 'A', text: "Right this way. Here are your menus." },
+            { speaker: 'B', text: "Thank you. What do you recommend?" },
+            { speaker: 'A', text: "The grilled fish is very popular." },
+            { speaker: 'B', text: "Okay, I'll have the grilled fish and a glass of water." },
+            { speaker: 'A', text: "And for you?" },
+            { speaker: 'C', text: "I'll have the pasta." },
+            { speaker: 'A', text: "Excellent choice!" },
+          ],
         },
       ],
     },
-    '4': {
+    '4': { // สำหรับ lessonId: '4' (Shopping)
       mainTitle: 'Shopping',
       sections: [
         {
           type: 'header',
-          icon: require('../assets/images/icon_shopping.png'),
-          title: 'Lesson: Shopping',
+          icon: require('../assets/images/shopping.png'), // ใช้ไอคอนการช้อปปิ้ง
+          title: 'Conversation Lesson: Shopping',
         },
         {
           type: 'vocabulary',
@@ -152,35 +155,38 @@ const LessonDetailScreen = ({ route, navigation }) => {
             { english: 'salesperson', thai: 'พนักงานขาย' },
             { english: 'price', thai: 'ราคา' },
             { english: 'discount', thai: 'ส่วนลด' },
+            { english: 'cashier', thai: 'แคชเชียร์' },
             { english: 'receipt', thai: 'ใบเสร็จ' },
-            { english: 'fitting room', thai: 'ห้องลองเสื้อ' },
-            { english: 'cashier', thai: 'พนักงานเก็บเงิน' },
-            { english: 'credit card', thai: 'บัตรเครดิต' },
+            { english: 'try on', thai: 'ลองสวม' },
             { english: 'size', thai: 'ขนาด' },
+            { english: 'credit card', thai: 'บัตรเครดิต' },
           ],
         },
         {
-          type: 'content',
-          title: 'Part 2: Asking about products',
-          content: `
-            Useful phrases when shopping:
-            - "How much is this?"
-            - "Do you have this in a different size/color?"
-            - "Can I try this on?"
-            - "Where is the fitting room?"
-            - "I'll take this."
-            - "Do you accept credit cards?"
-          `,
+          type: 'conversation',
+          title: 'Part 2: Conversation Practice',
+          dialogues: [
+            { speaker: 'A', text: "Can I help you?" },
+            { speaker: 'B', text: "Yes, please. I'm looking for a new shirt." },
+            { speaker: 'A', text: "What size are you?" },
+            { speaker: 'B', text: "Medium. Do you have this in blue?" },
+            { speaker: 'A', text: "Let me check. Yes, here you go." },
+            { speaker: 'B', text: "Thanks. Can I try it on?" },
+            { speaker: 'A', text: "The fitting rooms are over there." },
+            { speaker: 'B', text: "It fits perfectly! How much is it?" },
+            { speaker: 'A', text: "That's $25." },
+            { speaker: 'B', text: "I'll take it." },
+          ],
         },
       ],
     },
-    '5': {
+    '5': { // สำหรับ lessonId: '5' (Job Interview) - เพิ่มโค้ดใหม่
       mainTitle: 'Job Interview',
       sections: [
         {
           type: 'header',
-          icon: require('../assets/images/icon_job_interview.png'),
-          title: 'Lesson: Job Interview',
+          icon: require('../assets/images/job_interview.png'), // ใช้ไอคอนการสัมภาษณ์งาน
+          title: 'Conversation Lesson: Job Interview',
         },
         {
           type: 'vocabulary',
@@ -188,107 +194,123 @@ const LessonDetailScreen = ({ route, navigation }) => {
           data: [
             { english: 'interview', thai: 'สัมภาษณ์' },
             { english: 'employer', thai: 'นายจ้าง' },
-            { english: 'employee', thai: 'ลูกจ้าง' },
-            { english: 'resume', thai: 'ประวัติย่อ' },
+            { english: 'applicant', thai: 'ผู้สมัคร' },
+            { english: 'resume', thai: 'เรซูเม่' },
             { english: 'experience', thai: 'ประสบการณ์' },
-            { english: 'skill', thai: 'ทักษะ' },
+            { english: 'skills', thai: 'ทักษะ' },
+            { english: 'qualifications', thai: 'คุณสมบัติ' },
             { english: 'strength', thai: 'จุดแข็ง' },
             { english: 'weakness', thai: 'จุดอ่อน' },
             { english: 'salary', thai: 'เงินเดือน' },
-            { english: 'position', thai: 'ตำแหน่ง' },
           ],
         },
         {
-          type: 'content',
-          title: 'Part 2: Common Interview Questions & Answers',
-          content: `
-            **1. Tell me about yourself.**
-            - "My name is [Your Name]. I am [Your Age] years old. I just finished high school and am eager to start my career."
-
-            **2. Why do you want this job?**
-            - "I want to gain experience in this field and I believe this position aligns with my career goals."
-
-            **3. What are your strengths?**
-            - "I am hard-working, responsible, and eager to learn new things. I am also a good team player."
-
-            **4. Why should we hire you?**
-            - "I am a highly motivated individual with a strong desire to contribute to your company. I am confident that my skills and enthusiasm make me a good fit for this role."
-          `,
+          type: 'conversation',
+          title: 'Part 2: Conversation Practice',
+          dialogues: [
+            { speaker: 'Interviewer', text: "Good morning, please have a seat." },
+            { speaker: 'Applicant', text: "Thank you. Good morning." },
+            { speaker: 'Interviewer', text: "Tell me about yourself." },
+            { speaker: 'Applicant', text: "I'm a recent graduate with a degree in Marketing. I'm highly motivated and eager to learn." },
+            { speaker: 'Interviewer', text: "Why are you interested in this position?" },
+            { speaker: 'Applicant', text: "I'm impressed by your company's innovative approach and I believe my skills align well with the job requirements." },
+            { speaker: 'Interviewer', text: "What are your strengths?" },
+            { speaker: 'Applicant', text: "I'm a good communicator and a quick learner. I'm also very organized." },
+            { speaker: 'Interviewer', text: "Do you have any questions for me?" },
+            { speaker: 'Applicant', text: "Yes, what are the opportunities for growth within the company?" },
+          ],
         },
       ],
     },
   };
 
-  const currentLessonContent = lessonContent[lessonId];
-
-  if (!currentLessonContent) {
-    return (
-      <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
-        <View style={styles.container}>
-          <Text style={[styles.errorText, { color: colors.danger }]}>ไม่พบเนื้อหาสำหรับบทเรียนนี้</Text>
-          <TouchableOpacity
-            style={[styles.backButton, { backgroundColor: colors.primary }]}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.backButtonText}>กลับไปยังรายการบทเรียน</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    );
-  }
+  // ดึงเนื้อหาตาม ID ของบทเรียนที่ส่งมา
+  const currentLessonContent = lessonContent[lesson.id] || { sections: [] };
+  const displayTitle = currentLessonContent.mainTitle || lesson.title; // ใช้ mainTitle ถ้ามี มิฉะนั้นใช้ lesson.title
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={[styles.lessonHeader, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Image source={currentLessonContent.sections[0].icon} style={styles.headerIcon} />
-          <Text style={[styles.mainTitle, { color: colors.text }]}>{currentLessonContent.mainTitle}</Text>
-          <Text style={[styles.description, { color: colors.text }]}>{lesson.description}</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView style={styles.container}>
+        {/* ส่วนหัวด้านบนสุดของหน้าจอ (New Friends / At School / At a Restaurant / Shopping / Job Interview) */}
+        <View style={styles.topHeader}>
+          <Image
+            source={lesson.image} // ใช้ไอคอนที่ส่งมาจาก LessonListScreen
+            style={styles.topHeaderIcon}
+          />
+          <Text style={styles.topHeaderText}>{displayTitle}</Text>
         </View>
 
-        {currentLessonContent.sections.map((section, index) => (
-          <View key={index} style={[styles.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>{section.title}</Text>
-            {section.type === 'vocabulary' && (
-              <View style={styles.tableContainer}>
-                <View style={[styles.tableHeaderRow, { backgroundColor: colors.border }]}>
-                  <Text style={[styles.tableHeaderCell, { color: colors.text }]}>English</Text>
-                  <Text style={[styles.tableHeaderCell, { color: colors.text }]}>Thai</Text>
+        <View style={styles.contentContainer}>
+          {currentLessonContent.sections.map((section, index) => {
+            if (section.type === 'header') {
+              return (
+                <View key={index} style={styles.lessonHeader}>
+                  <Image source={section.icon} style={styles.lessonHeaderIcon} />
+                  <Text style={styles.lessonHeaderText}>{section.title}</Text>
                 </View>
-                {section.data.map((item, i) => (
-                  <View key={i} style={styles.tableRow}>
-                    <Text style={[styles.tableCell, { color: colors.text }]}>{item.english}</Text>
-                    <Text style={[styles.tableCell, { color: colors.text }]}>{item.thai}</Text>
+              );
+            } else if (section.type === 'vocabulary') {
+              return (
+                <View key={index} style={styles.section}>
+                  <View style={styles.sectionTitleRow}>
+                    <Text style={styles.sectionTitle}>{section.title}</Text>
                   </View>
-                ))}
-              </View>
-            )}
-            {section.type === 'dialogue' && (
-              <View>
-                {section.dialogues.map((line, i) => (
-                  <View key={i} style={styles.dialogueLine}>
-                    {line.icon && <Image source={line.icon} style={styles.dialogueIcon} />}
-                    <Text style={[styles.dialogueText, { color: colors.text }]}>
-                      <Text style={styles.dialogueSpeaker}>{line.speaker}: </Text>
-                      {line.text}
-                    </Text>
+                  <View style={styles.vocabularyTable}>
+                    <View style={styles.tableHeaderRow}>
+                      <Text style={styles.tableHeaderCell}>English</Text>
+                      <Text style={styles.tableHeaderCell}>Thai</Text>
+                    </View>
+                    {section.data.map((item, voc_index) => (
+                      <View key={voc_index} style={styles.tableRow}>
+                        <Text style={styles.tableCell}>{item.english}</Text>
+                        <Text style={styles.tableCell}>{item.thai}</Text>
+                      </View>
+                    ))}
                   </View>
-                ))}
-              </View>
-            )}
-            {section.type === 'content' && (
-              <Text style={[styles.sectionContent, { color: colors.text }]}>{section.content}</Text>
-            )}
-          </View>
-        ))}
+                </View>
+              );
+            } else if (section.type === 'conversation') {
+              return (
+                <View key={index} style={styles.section}>
+                   <View style={styles.sectionTitleRow}>
+                    <Text style={styles.sectionTitle}>{section.title}</Text>
+                  </View>
+                  {section.dialogues.map((dialogue, conv_index) => (
+                    <View key={conv_index} style={styles.dialogueLine}>
+                      {/* ไอคอนผู้พูด (Placeholder) **คุณต้องมีไฟล์ภาพ speaker_icon.png ใน assets/images** */}
+                      <Image source={require('../assets/images/speaker_icon.png')} style={styles.dialogueIcon} />
+                      <Text style={styles.dialogueText}>
+                        <Text style={styles.dialogueSpeaker}>{dialogue.speaker}: </Text>
+                        {dialogue.text}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              );
+            } else {
+              // การแสดงผลเริ่มต้นสำหรับบทเรียนประเภทอื่นๆ (หากไม่ได้กำหนด type)
+              return (
+                <View key={index} style={styles.section}>
+                  <Text style={styles.sectionTitle}>{section.title}</Text>
+                  <Text style={styles.sectionContent}>{section.content}</Text>
+                </View>
+              );
+            }
+          })}
 
-        <TouchableOpacity
-          style={[styles.quizButton, { backgroundColor: colors.primary }]}
-          onPress={() => navigation.navigate('LessonQuiz', { lessonId: lesson.id, lessonTitle: lesson.title })}
-        >
-          <Text style={styles.quizButtonText}>ทำแบบทดสอบบทเรียนนี้ 🧠</Text>
-        </TouchableOpacity>
-
+          {/* ปุ่มทำแบบทดสอบ */}
+          <TouchableOpacity
+            style={styles.testButton}
+            onPress={() =>
+              navigation.navigate('Quiz', {
+                lessonId: lesson.id,
+                lessonTitle: lesson.title, // ส่ง title ไปแสดงบน header ของ QuizScreen
+              })
+            }
+          >
+            <Text style={styles.testButtonText}>ทำแบบทดสอบ</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -297,86 +319,85 @@ const LessonDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    backgroundColor: '#E0F2FE', // สีฟ้าอ่อนสำหรับพื้นหลัง
   },
-  scrollContent: {
-    flexGrow: 1,
-    padding: 15,
-    paddingVertical: 20,
+  container: {
+    flex: 1,
+  },
+  topHeader: {
+    flexDirection: 'row',
     alignItems: 'center',
+    padding: 16,
+    paddingBottom: 10,
+    backgroundColor: '#E0F2FE', // สีเดียวกับ safeArea
   },
-  lessonHeader: {
-    width: '100%',
-    padding: 20,
-    borderRadius: 20,
-    marginBottom: 20,
-    alignItems: 'center',
-    borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  headerIcon: {
-    width: 80,
-    height: 80,
-    marginBottom: 10,
+  topHeaderIcon: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
     resizeMode: 'contain',
   },
-  mainTitle: {
-    fontSize: 26,
+  topHeaderText: {
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 8,
-    textAlign: 'center',
+    color: '#000000', // สีดำสำหรับข้อความ "New Friends"
   },
-  description: {
-    fontSize: 16,
-    lineHeight: 24,
-    textAlign: 'center',
+  contentContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#ffffff', // พื้นหลังสีขาวสำหรับพื้นที่เนื้อหาหลัก
   },
-  section: {
-    width: '100%',
-    padding: 18,
-    borderRadius: 15,
-    marginBottom: 15,
-    borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 3,
-    elevation: 2,
+  lessonHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#D1D5DB', // เส้นสีเทาอ่อน
   },
-  sectionTitle: {
+  lessonHeaderIcon: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
+    resizeMode: 'contain',
+  },
+  lessonHeaderText: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderColor: '#eee',
-    paddingBottom: 8,
+    color: '#333333', // สีเทาเข้มสำหรับหัวข้อ "Conversation Lesson: New Friends"
   },
-  sectionContent: {
-    fontSize: 16,
-    lineHeight: 24,
-    whiteSpace: 'pre-wrap', // รักษารูปแบบขึ้นบรรทัดใหม่
+  section: {
+    marginBottom: 20,
   },
-  tableContainer: {
-    marginTop: 10,
+  sectionTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333333', // สีเทาเข้มสำหรับหัวข้อส่วนต่างๆ
+  },
+  vocabularyTable: {
     borderWidth: 1,
     borderColor: '#D1D5DB',
-    borderRadius: 8,
+    borderRadius: 5,
     overflow: 'hidden',
+    marginTop: 10,
   },
   tableHeaderRow: {
     flexDirection: 'row',
+    backgroundColor: '#F0F0F0', // พื้นหลังส่วนหัวตารางสีเทาอ่อน
     borderBottomWidth: 1,
     borderColor: '#D1D5DB',
   },
   tableHeaderCell: {
     flex: 1,
-    padding: 12,
+    padding: 10,
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 15,
+    color: '#333333',
   },
   tableRow: {
     flexDirection: 'row',
@@ -385,63 +406,49 @@ const styles = StyleSheet.create({
   },
   tableCell: {
     flex: 1,
-    padding: 12,
+    padding: 10,
     textAlign: 'center',
-    fontSize: 15,
+    color: '#555555',
   },
   dialogueLine: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   dialogueIcon: {
-    width: 32,
-    height: 32,
-    marginRight: 10,
-    borderRadius: 16, // ทำให้เป็นวงกลม
-    resizeMode: 'cover',
-    borderWidth: 1,
-    borderColor: '#B0F2BC', // สีขอบไอคอน
+    width: 24,
+    height: 24,
+    marginRight: 8,
+    marginTop: 2, // จัดตำแหน่งให้ตรงกับข้อความ
+    resizeMode: 'contain',
   },
   dialogueText: {
     fontSize: 16,
-    lineHeight: 24,
-    flexShrink: 1,
+    color: '#333333',
+    flexShrink: 1, // อนุญาตให้ข้อความขึ้นบรรทัดใหม่
   },
   dialogueSpeaker: {
     fontWeight: 'bold',
   },
-  quizButton: {
-    paddingVertical: 15,
-    borderRadius: 15,
+  sectionContent: { // สำหรับเนื้อหาบทเรียนอื่นๆ ที่ไม่ใช่ New Friends
+    fontSize: 16,
+    color: '#374151',
+    lineHeight: 24,
+  },
+  testButton: {
+    backgroundColor: '#3B82F6',
+    paddingVertical: 14,
+    borderRadius: 12,
     alignItems: 'center',
-    width: '80%',
-    alignSelf: 'center',
-    marginTop: 25,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    marginTop: 20,
+    marginBottom: 30,
+    shadowColor: '#1D4ED8',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 4,
   },
-  quizButtonText: {
-    color: '#ffffff',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  errorText: {
-    fontSize: 18,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  backButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  backButtonText: {
+  testButtonText: {
     color: '#ffffff',
     fontWeight: 'bold',
     fontSize: 16,
