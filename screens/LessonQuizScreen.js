@@ -1,4 +1,4 @@
-// screens/QuizScreen.js
+// screens/LessonQuizScreen.js
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -10,7 +10,7 @@ import {
   Alert, // สำหรับแสดงผลลัพธ์
 } from 'react-native';
 
-const QuizScreen = ({ route, navigation }) => {
+const LessonQuizScreen = ({ route, navigation }) => {
   const { lessonId, lessonTitle } = route.params;
 
   // ข้อมูลคำถามสำหรับแบบทดสอบ (ตัวอย่างสำหรับบทเรียน 'New Friends')
