@@ -225,92 +225,84 @@ const LessonDetailScreen = ({ route, navigation }) => {
   };
 
   // ดึงเนื้อหาตาม ID ของบทเรียนที่ส่งมา
-  const currentLessonContent = lessonContent[lesson.id] || { sections: [] };
-  const displayTitle = currentLessonContent.mainTitle || lesson.title; // ใช้ mainTitle ถ้ามี มิฉะนั้นใช้ lesson.title
+  const currentLessonContent = lessonContent[lesson.id];
+
+  if (!currentLessonContent) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.errorText}>Lesson content not found.</Text>
+      </SafeAreaView>
+    );
+  }
+
+  const renderSection = (section, index) => {
+    switch (section.type) {
+      case 'header':
+        return (
+          <View key={index} style={styles.headerSection}>
+            {section.icon && <Image source={section.icon} style={styles.headerIcon} />}
+            <Text style={styles.mainLessonTitle}>{section.title}</Text>
+          </View>
+        );
+      case 'vocabulary':
+        return (
+          <View key={index} style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>{section.title}</Text>
+            <View style={styles.table}>
+              <View style={styles.tableHeaderRow}>
+                <Text style={styles.tableHeaderCell}>English</Text>
+                <Text style={styles.tableHeaderCell}>Thai</Text>
+              </View>
+              {section.data.map((item, i) => (
+                <View key={i} style={styles.tableRow}>
+                  <Text style={styles.tableCell}>{item.english}</Text>
+                  <Text style={styles.tableCell}>{item.thai}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        );
+      case 'dialogue':
+        return (
+          <View key={index} style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>{section.title}</Text>
+            {section.data.map((line, i) => (
+              <View key={i} style={styles.dialogueLine}>
+                {/* สามารถเพิ่มรูปโปรไฟล์หรือไอคอนเล็กๆ ได้ที่นี่ หากมี */}
+                <Text style={styles.dialogueText}>
+                  <Text style={styles.dialogueSpeaker}>{line.speaker}:</Text> {line.text}
+                </Text>
+              </View>
+            ))}
+          </View>
+        );
+      case 'explanation':
+        return (
+          <View key={index} style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>{section.title}</Text>
+            <Text style={styles.sectionContent}>{section.text}</Text>
+          </View>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.container}>
-        {/* ส่วนหัวด้านบนสุดของหน้าจอ (New Friends / At School / At a Restaurant / Shopping / Job Interview) */}
-        <View style={styles.topHeader}>
-          <Image
-            source={lesson.image} // ใช้ไอคอนที่ส่งมาจาก LessonListScreen
-            style={styles.topHeaderIcon}
-          />
-          <Text style={styles.topHeaderText}>{displayTitle}</Text>
-        </View>
-
-        <View style={styles.contentContainer}>
-          {currentLessonContent.sections.map((section, index) => {
-            if (section.type === 'header') {
-              return (
-                <View key={index} style={styles.lessonHeader}>
-                  <Image source={section.icon} style={styles.lessonHeaderIcon} />
-                  <Text style={styles.lessonHeaderText}>{section.title}</Text>
-                </View>
-              );
-            } else if (section.type === 'vocabulary') {
-              return (
-                <View key={index} style={styles.section}>
-                  <View style={styles.sectionTitleRow}>
-                    <Text style={styles.sectionTitle}>{section.title}</Text>
-                  </View>
-                  <View style={styles.vocabularyTable}>
-                    <View style={styles.tableHeaderRow}>
-                      <Text style={styles.tableHeaderCell}>English</Text>
-                      <Text style={styles.tableHeaderCell}>Thai</Text>
-                    </View>
-                    {section.data.map((item, voc_index) => (
-                      <View key={voc_index} style={styles.tableRow}>
-                        <Text style={styles.tableCell}>{item.english}</Text>
-                        <Text style={styles.tableCell}>{item.thai}</Text>
-                      </View>
-                    ))}
-                  </View>
-                </View>
-              );
-            } else if (section.type === 'conversation') {
-              return (
-                <View key={index} style={styles.section}>
-                   <View style={styles.sectionTitleRow}>
-                    <Text style={styles.sectionTitle}>{section.title}</Text>
-                  </View>
-                  {section.dialogues.map((dialogue, conv_index) => (
-                    <View key={conv_index} style={styles.dialogueLine}>
-                      {/* ไอคอนผู้พูด (Placeholder) **คุณต้องมีไฟล์ภาพ speaker_icon.png ใน assets/images** */}
-                      <Image source={require('../assets/images/speaker_icon.png')} style={styles.dialogueIcon} />
-                      <Text style={styles.dialogueText}>
-                        <Text style={styles.dialogueSpeaker}>{dialogue.speaker}: </Text>
-                        {dialogue.text}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              );
-            } else {
-              // การแสดงผลเริ่มต้นสำหรับบทเรียนประเภทอื่นๆ (หากไม่ได้กำหนด type)
-              return (
-                <View key={index} style={styles.section}>
-                  <Text style={styles.sectionTitle}>{section.title}</Text>
-                  <Text style={styles.sectionContent}>{section.content}</Text>
-                </View>
-              );
-            }
-          })}
-
-          {/* ปุ่มทำแบบทดสอบ */}
-          <TouchableOpacity
-            style={styles.testButton}
-            onPress={() =>
-              navigation.navigate('Quiz', {
-                lessonId: lesson.id,
-                lessonTitle: lesson.title, // ส่ง title ไปแสดงบน header ของ QuizScreen
-              })
-            }
-          >
-            <Text style={styles.testButtonText}>ทำแบบทดสอบ</Text>
-          </TouchableOpacity>
-        </View>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {currentLessonContent.sections.map(renderSection)}
+        <TouchableOpacity
+          style={styles.quizButton}
+          onPress={() =>
+            navigation.navigate('Quiz', {
+              lessonId: lesson.id,
+              lessonTitle: lesson.title,
+            })
+          }
+        >
+          <Text style={styles.quizButtonText}>Take Quiz</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -319,139 +311,140 @@ const LessonDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#E0F2FE', // สีฟ้าอ่อนสำหรับพื้นหลัง
+    backgroundColor: '#F8F8FF', // Ghost White
   },
-  container: {
-    flex: 1,
+  scrollViewContent: {
+    padding: 15,
+    paddingBottom: 30,
   },
-  topHeader: {
-    flexDirection: 'row',
+  headerSection: {
     alignItems: 'center',
-    padding: 16,
-    paddingBottom: 10,
-    backgroundColor: '#E0F2FE', // สีเดียวกับ safeArea
+    marginBottom: 25,
+    paddingVertical: 15,
+    backgroundColor: '#E0EFFF', // Alice Blue
+    borderRadius: 15,
+    shadowColor: '#A0BBE2',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
-  topHeaderIcon: {
-    width: 40,
-    height: 40,
-    marginRight: 10,
-    resizeMode: 'contain',
-  },
-  topHeaderText: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#000000', // สีดำสำหรับข้อความ "New Friends"
-  },
-  contentContainer: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#ffffff', // พื้นหลังสีขาวสำหรับพื้นที่เนื้อหาหลัก
-  },
-  lessonHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#D1D5DB', // เส้นสีเทาอ่อน
-  },
-  lessonHeaderIcon: {
-    width: 30,
-    height: 30,
-    marginRight: 10,
-    resizeMode: 'contain',
-  },
-  lessonHeaderText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333333', // สีเทาเข้มสำหรับหัวข้อ "Conversation Lesson: New Friends"
-  },
-  section: {
-    marginBottom: 20,
-  },
-  sectionTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  headerIcon: {
+    width: 80,
+    height: 80,
     marginBottom: 10,
+    resizeMode: 'contain',
+  },
+  mainLessonTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#4A4A6A',
+    textAlign: 'center',
+  },
+  sectionContainer: {
+    backgroundColor: '#FFFFFF', // White background for sections
+    borderRadius: 15,
+    padding: 20,
+    marginBottom: 20,
+    shadowColor: '#D3DDF4',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333333', // สีเทาเข้มสำหรับหัวข้อส่วนต่างๆ
+    color: '#6A5ACD', // Slate Blue
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F8FF', // Alice Blue light border
+    paddingBottom: 10,
   },
-  vocabularyTable: {
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: 5,
-    overflow: 'hidden',
+  sectionContent: {
+    fontSize: 16,
+    color: '#5F6B7F', // Darker gray for content
+    lineHeight: 24,
+  },
+  table: {
     marginTop: 10,
+    borderWidth: 1,
+    borderColor: '#D3DDF4', // Lavender Blue
+    borderRadius: 10,
+    overflow: 'hidden', // Ensures inner borders are within radius
   },
   tableHeaderRow: {
     flexDirection: 'row',
-    backgroundColor: '#F0F0F0', // พื้นหลังส่วนหัวตารางสีเทาอ่อน
+    backgroundColor: '#D3DDF4', // Lavender Blue for header
     borderBottomWidth: 1,
-    borderColor: '#D1D5DB',
+    borderColor: '#C0CCE8',
   },
   tableHeaderCell: {
     flex: 1,
-    padding: 10,
+    padding: 12,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#333333',
+    color: '#4A4A6A',
+    fontSize: 16,
   },
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: '#EFF3F8', // Lighter border for rows
   },
   tableCell: {
     flex: 1,
-    padding: 10,
+    padding: 12,
     textAlign: 'center',
-    color: '#555555',
+    color: '#5F6B7F',
+    fontSize: 15,
   },
   dialogueLine: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 8,
+    marginBottom: 10, // เพิ่มระยะห่างระหว่างบรรทัดสนทนา
+    paddingVertical: 5,
   },
   dialogueIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 8,
-    marginTop: 2, // จัดตำแหน่งให้ตรงกับข้อความ
+    width: 28,
+    height: 28,
+    marginRight: 10,
+    marginTop: 2,
     resizeMode: 'contain',
   },
   dialogueText: {
-    fontSize: 16,
-    color: '#333333',
-    flexShrink: 1, // อนุญาตให้ข้อความขึ้นบรรทัดใหม่
+    fontSize: 17, // ขนาดฟอนต์ใหญ่ขึ้น
+    color: '#4A4A6A',
+    flexShrink: 1,
+    lineHeight: 26,
   },
   dialogueSpeaker: {
     fontWeight: 'bold',
+    color: '#6A5ACD', // Slate Blue for speaker
   },
-  sectionContent: { // สำหรับเนื้อหาบทเรียนอื่นๆ ที่ไม่ใช่ New Friends
-    fontSize: 16,
-    color: '#374151',
-    lineHeight: 24,
-  },
-  testButton: {
-    backgroundColor: '#3B82F6',
-    paddingVertical: 14,
-    borderRadius: 12,
+  quizButton: {
+    backgroundColor: '#A0BBE2', // Periwinkle
+    paddingVertical: 15,
+    borderRadius: 30,
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 30,
-    shadowColor: '#1D4ED8',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 4,
+    marginTop: 30,
+    shadowColor: '#A0BBE2',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    elevation: 7,
   },
-  testButtonText: {
-    color: '#ffffff',
+  quizButtonText: {
+    color: '#FFFFFF',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
+    letterSpacing: 0.6,
+  },
+  errorText: {
+    textAlign: 'center',
+    marginTop: 50,
+    fontSize: 18,
+    color: '#FF6347', // Tomato
   },
 });
 

@@ -20,7 +20,7 @@ const LessonQuizScreen = ({ route, navigation }) => {
       questions: [
         {
           id: 'q1',
-          question: "A:\n________? \nB: My name is Ben.",
+          question: "A:________? \nB: My name is Ben.",
           options: ["A. Where are you from?", "B. How are you?", "C. What’s your name?", "D. How old are you?"],
           correctAnswer: "C. What’s your name?",
         },
@@ -32,7 +32,7 @@ const LessonQuizScreen = ({ route, navigation }) => {
         },
         {
           id: 'q3',
-          question: "A:\n________? \nB: I’m 13 years old.",
+          question: "A:________? \nB: I’m 13 years old.",
           options: ["A. How are you?", "B. Where are you from?", "C. What’s your name?", "D. How old are you?"],
           correctAnswer: "D. How old are you?",
         },
@@ -193,76 +193,67 @@ const LessonQuizScreen = ({ route, navigation }) => {
     // คุณสามารถเพิ่ม quizData สำหรับ lessonId อื่นๆ ได้ที่นี่
   };
 
-  const currentQuiz = quizData[lessonId] || { title: 'ไม่พบแบบทดสอบ', questions: [] };
-
+  const currentQuiz = quizData[lessonId];
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [score, setScore] = useState(0);
-  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [showResult, setShowResult] = useState(false);
+
+  useEffect(() => {
+    // Reset state when lessonId changes
+    setCurrentQuestionIndex(0);
+    setSelectedOption(null);
+    setScore(0);
+    setShowResult(false);
+    navigation.setOptions({ title: `🧠 ${lessonTitle || 'Quiz Time'}` });
+  }, [lessonId, lessonTitle, navigation]);
+
+  if (!currentQuiz) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.errorText}>Quiz content not found for this lesson.</Text>
+      </SafeAreaView>
+    );
+  }
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
   };
 
-  const handleNextQuestion = () => {
-    // ตรวจสอบคำตอบเมื่อไปยังคำถามถัดไป
+  const handleSubmit = () => {
     if (selectedOption === currentQuiz.questions[currentQuestionIndex].correctAnswer) {
       setScore(score + 1);
     }
 
     if (currentQuestionIndex < currentQuiz.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption(null); // ล้างตัวเลือกที่เลือกไว้สำหรับคำถามถัดไป
+      setSelectedOption(null); // Reset selected option for next question
     } else {
-      setQuizCompleted(true);
+      setShowResult(true);
     }
   };
 
-  const handleRetakeQuiz = () => {
+  const handleRestartQuiz = () => {
     setCurrentQuestionIndex(0);
     setSelectedOption(null);
     setScore(0);
-    setQuizCompleted(false);
+    setShowResult(false);
   };
-
-  if (!currentQuiz.questions || currentQuiz.questions.length === 0) {
-    return (
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
-          <Text style={styles.noQuizText}>ขออภัย ไม่พบแบบทดสอบสำหรับบทเรียนนี้</Text>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.backButtonText}>ย้อนกลับ</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    );
-  }
 
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.quizTitle}>{currentQuiz.title}</Text>
-
-        {quizCompleted ? (
-          <View style={styles.resultContainer}>
-            <Text style={styles.resultText}>แบบทดสอบเสร็จสิ้น!</Text>
-            <Text style={styles.scoreText}>คุณได้คะแนน: {score} / {currentQuiz.questions.length}</Text>
-            <TouchableOpacity style={styles.retakeButton} onPress={handleRetakeQuiz}>
-              <Text style={styles.retakeButtonText}>ทำแบบทดสอบใหม่</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-              <Text style={styles.backButtonText}>กลับสู่บทเรียน</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionNumber}>คำถามที่ {currentQuestionIndex + 1} / {currentQuiz.questions.length}</Text>
-            <Text style={styles.questionText}>{currentQuestion.question}</Text>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {!showResult ? (
+          <View style={styles.quizContainer}>
+            <Text style={styles.quizTitle}>{currentQuiz.title}</Text>
+            <View style={styles.questionContainer}>
+              <Text style={styles.questionNumber}>
+                Question {currentQuestionIndex + 1} of {currentQuiz.questions.length}
+              </Text>
+              <Text style={styles.questionText}>{currentQuestion.question}</Text>
+            </View>
 
             <View style={styles.optionsContainer}>
               {currentQuestion.options.map((option, index) => (
@@ -270,7 +261,7 @@ const LessonQuizScreen = ({ route, navigation }) => {
                   key={index}
                   style={[
                     styles.optionButton,
-                    selectedOption === option && styles.selectedOption,
+                    selectedOption === option && styles.selectedOptionButton,
                   ]}
                   onPress={() => handleOptionSelect(option)}
                 >
@@ -281,12 +272,28 @@ const LessonQuizScreen = ({ route, navigation }) => {
 
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={handleNextQuestion}
-              disabled={selectedOption === null} // ปุ่มจะกดไม่ได้ถ้ายังไม่เลือกตัวเลือก
+              onPress={handleSubmit}
+              disabled={selectedOption === null} // Disable if no option is selected
             >
               <Text style={styles.submitButtonText}>
-                {currentQuestionIndex === currentQuiz.questions.length - 1 ? 'ส่งคำตอบ' : 'คำถามถัดไป'}
+                {currentQuestionIndex < currentQuiz.questions.length - 1 ? 'Next Question' : 'Finish Quiz'}
               </Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.resultContainer}>
+            <Text style={styles.resultText}>Quiz Completed!</Text>
+            <Text style={styles.scoreText}>
+              Your Score: {score} / {currentQuiz.questions.length}
+            </Text>
+            <TouchableOpacity style={styles.restartButton} onPress={handleRestartQuiz}>
+              <Text style={styles.restartButtonText}>Restart Quiz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.backToLessonsButton}
+              onPress={() => navigation.popToTop()} // Go back to the first screen (Home or LessonList)
+            >
+              <Text style={styles.backToLessonsButtonText}>Back to Lessons</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -298,130 +305,157 @@ const LessonQuizScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#E0F2FE', // Background similar to LessonDetailScreen
+    backgroundColor: '#F8F8FF', // Ghost White
   },
-  container: {
+  scrollViewContent: {
     flexGrow: 1,
-    padding: 20,
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff', // White background for the main content
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    marginTop: 0,
-    paddingTop: 30,
+    padding: 20,
+  },
+  quizContainer: {
+    width: '100%',
+    maxWidth: 600, // จำกัดความกว้างเพื่อให้อ่านง่าย
+    backgroundColor: '#FFFFFF', // White background
+    borderRadius: 20, // โค้งมนมากขึ้น
+    padding: 25,
+    shadowColor: '#A0BBE2',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    elevation: 8,
   },
   quizTitle: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
-    color: '#1E3A8A',
-    marginBottom: 20,
+    color: '#6A5ACD', // Slate Blue
+    marginBottom: 25,
     textAlign: 'center',
-  },
-  noQuizText: {
-    fontSize: 18,
-    color: '#555',
-    textAlign: 'center',
-    marginTop: 50,
   },
   questionContainer: {
-    width: '100%',
-    backgroundColor: '#F0F9FF',
+    marginBottom: 25,
+    backgroundColor: '#E0EFFF', // Alice Blue
     borderRadius: 15,
     padding: 20,
-    marginBottom: 20,
-    shadowColor: '#60A5FA',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
   },
   questionNumber: {
-    fontSize: 14,
-    color: '#64748B',
+    fontSize: 16,
+    color: '#778899', // Light Slate Gray
     marginBottom: 10,
-    textAlign: 'right',
+    fontWeight: '500',
   },
   questionText: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '600',
-    color: '#333333',
-    marginBottom: 20,
+    color: '#4A4A6A',
+    lineHeight: 28,
   },
   optionsContainer: {
     marginBottom: 20,
   },
   optionButton: {
-    backgroundColor: '#E6F2FF', // Light blue for options
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
+    backgroundColor: '#F0F8FF', // Alice Blue light
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#B3DAF1', // Slightly darker blue border
+    borderColor: '#D3DDF4', // Lavender Blue
+    flexDirection: 'row', // จัดเรียงข้อความ
+    alignItems: 'center',
   },
-  selectedOption: {
-    backgroundColor: '#B3DAF1', // Darker blue when selected
-    borderColor: '#4D9DE0',
+  selectedOptionButton: {
+    backgroundColor: '#D3DDF4', // Lavender Blue when selected
+    borderColor: '#A0BBE2', // Periwinkle border when selected
   },
   optionText: {
-    fontSize: 16,
-    color: '#2c3e50',
+    fontSize: 17,
+    color: '#4A4A6A',
+    flexShrink: 1,
   },
   submitButton: {
-    backgroundColor: '#4D9DE0', // Primary blue button
+    backgroundColor: '#A0BBE2', // Periwinkle
     paddingVertical: 15,
-    borderRadius: 12,
+    borderRadius: 15, // โค้งมน
     alignItems: 'center',
     marginTop: 10,
+    shadowColor: '#A0BBE2',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    elevation: 7,
   },
   submitButtonText: {
     color: '#ffffff',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 19,
+    letterSpacing: 0.7,
   },
   resultContainer: {
     alignItems: 'center',
     marginTop: 50,
-    padding: 20,
-    backgroundColor: '#F0F9FF',
-    borderRadius: 15,
+    padding: 30,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
     width: '100%',
-    shadowColor: '#60A5FA',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    maxWidth: 500,
+    shadowColor: '#A0BBE2',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    elevation: 8,
   },
   resultText: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: 'bold',
-    color: '#1E3A8A',
-    marginBottom: 10,
+    color: '#6A5ACD',
+    marginBottom: 15,
   },
   scoreText: {
-    fontSize: 20,
-    color: '#28A745', // Green for score
+    fontSize: 22,
+    color: '#3CB371', // Medium Sea Green for score
     fontWeight: 'bold',
     marginBottom: 30,
   },
-  retakeButton: {
-    backgroundColor: '#28A745', // Green for retake
+  restartButton: {
+    backgroundColor: '#A0BBE2', // Periwinkle
     paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  backButton: {
-    backgroundColor: '#6C757D', // Grey for back button
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 10,
+    paddingHorizontal: 25,
+    borderRadius: 25,
     marginTop: 10,
+    shadowColor: '#A0BBE2',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5,
   },
-  backButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
+  restartButtonText: {
+    color: '#FFFFFF',
     fontWeight: 'bold',
+    fontSize: 17,
+  },
+  backToLessonsButton: {
+    backgroundColor: '#D3DDF4', // Lavender Blue
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 25,
+    marginTop: 15,
+    shadowColor: '#D3DDF4',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  backToLessonsButtonText: {
+    color: '#4A4A6A',
+    fontWeight: 'bold',
+    fontSize: 17,
+  },
+  errorText: {
+    textAlign: 'center',
+    marginTop: 50,
+    fontSize: 18,
+    color: '#FF6347',
   },
 });
 

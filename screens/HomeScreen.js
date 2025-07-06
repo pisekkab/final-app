@@ -31,14 +31,15 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.content}>
           <Image
             source={require('../assets/images/logo.png')} // Using the provided image as the main visual
-            style={styles.mainImage} // ใช้ mainImage style แทน container
+            style={styles.container} // ใช้ mainImage style แทน container
             resizeMode="contain"
           />
           <Text style={styles.appName}>
             ✨ FluentUp ✨
           </Text>
           <Text style={styles.subtitle}>
-            Learn English with fun & engaging lessons!
+            Foreign Language Department Chiangkhan School
+
           </Text>
           <TouchableOpacity style={styles.startButton} onPress={handleStartPress}>
             <Text style={styles.startButtonText}>Start Learning!</Text>
