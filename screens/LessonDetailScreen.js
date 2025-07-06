@@ -102,7 +102,7 @@ const LessonDetailScreen = ({ route, navigation }) => {
       sections: [
         {
           type: 'header',
-          icon: require('../assets/images/icon_restaurant.png'),
+          icon: require('../assets/images/at_restaurant.png'),
           title: 'Lesson: At a Restaurant',
         },
         {
