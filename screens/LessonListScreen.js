@@ -10,46 +10,33 @@ import {
 } from 'react-native';
 
 const LessonListScreen = ({ navigation }) => {
+  // Updated lessons array to match the image content
   const lessons = [
     {
       id: '1',
-      title: 'บทที่ 1: พื้นฐานการเขียนโปรแกรม',
-      description: 'เรียนรู้พื้นฐานและแนวคิดในการเขียนโปรแกรม',
-      duration: '30 นาที',
-      level: 'เริ่มต้น',
-      image: require('../assets/images/lesson1.png'),
+      title: 'New Friends',
+      image: require('../assets/images/new_friends.png'), // Placeholder, replace with actual path
+      // Removed description, duration, level as they are not in the image
     },
     {
       id: '2',
-      title: 'บทที่ 2: ตัวแปรและประเภทข้อมูล',
-      description: 'ทำความเข้าใจเกี่ยวกับตัวแปรและประเภทข้อมูลต่างๆ',
-      duration: '45 นาที',
-      level: 'เริ่มต้น',
-      image: require('../assets/images/lesson2.png'),
+      title: 'At School',
+      image: require('../assets/images/at_school.png'), // Placeholder, replace with actual path
     },
     {
       id: '3',
-      title: 'บทที่ 3: โครงสร้างควบคุม',
-      description: 'เรียนรู้เกี่ยวกับโครงสร้างควบคุมการทำงานในโปรแกรม',
-      duration: '60 นาที',
-      level: 'ปานกลาง',
-      image: require('../assets/images/lesson3.png'),
+      title: 'At a Restaurant',
+      image: require('../assets/images/at_restaurant.png'), // Placeholder, replace with actual path
     },
     {
       id: '4',
-      title: 'บทที่ 4: ฟังก์ชันและโมดูล',
-      description: 'เรียนรู้การสร้างและใช้งานฟังก์ชันและโมดูล',
-      duration: '60 นาที',
-      level: 'ปานกลาง',
-      image: require('../assets/images/lesson4.png'),
+      title: 'Shopping',
+      image: require('../assets/images/shopping.png'), // Placeholder, replace with actual path
     },
     {
       id: '5',
-      title: 'บทที่ 5: การจัดการข้อมูล',
-      description: 'เรียนรู้การจัดการข้อมูลและโครงสร้างข้อมูล',
-      duration: '75 นาที',
-      level: 'ก้าวหน้า',
-      image: require('../assets/images/lesson5.png'),
+      title: 'Job Interview',
+      image: require('../assets/images/job_interview.png'), // Placeholder, replace with actual path
     },
   ];
 
@@ -60,42 +47,19 @@ const LessonListScreen = ({ navigation }) => {
         navigation.navigate('LessonDetail', {
           id: item.id,
           title: item.title,
-          lesson: item,
+          lesson: item, // Pass the whole item for detail screen
         })
       }
     >
-      <Image source={item.image} style={styles.lessonImage} />
-      <View style={styles.lessonContent}>
-        <Text style={styles.lessonTitle}>{item.title}</Text>
-        <Text style={styles.lessonDescription}>{item.description}</Text>
-        <View style={styles.lessonMeta}>
-          <View style={styles.metaItem}>
-            <Text style={styles.metaText}>⏱ {item.duration}</Text>
-          </View>
-          <View style={styles.metaItem}>
-            <Text
-              style={[
-                styles.metaText,
-                styles.levelText,
-                item.level === 'เริ่มต้น'
-                  ? styles.beginnerLevel
-                  : item.level === 'ปานกลาง'
-                  ? styles.intermediateLevel
-                  : styles.advancedLevel,
-              ]}
-            >
-              {item.level}
-            </Text>
-          </View>
-        </View>
-      </View>
+      <Image source={item.image} style={styles.lessonIcon} />
+      <Text style={styles.lessonTitle}>{item.title}</Text>
+      {/* Removed description, duration, and level display */}
     </TouchableOpacity>
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.headerText}>📘 บทเรียนทั้งหมด</Text>
-      <Text style={styles.subheaderText}>เลือกบทเรียนที่คุณต้องการเรียนรู้ 🎓</Text>
+      {/* Removed header and subheader text */}
 
       <FlatList
         data={lessons}
@@ -110,85 +74,40 @@ const LessonListScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E0F7FA',
+    backgroundColor: '#ffffff', // Changed to white background based on the image
     padding: 16,
   },
-  headerText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#0D47A1',
-    marginBottom: 5,
-  },
-  subheaderText: {
-    fontSize: 16,
-    color: '#0277BD',
-    marginBottom: 20,
-  },
+  // Removed headerText and subheaderText styles as they are no longer used
+
   listContainer: {
     paddingBottom: 20,
+    paddingTop: 10, // Added some top padding to separate from top edge
   },
   lessonCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 16,
-    marginBottom: 16,
-    overflow: 'hidden',
-    shadowColor: '#90CAF9',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 4,
+    borderRadius: 10, // Slightly rounded corners
+    marginBottom: 15, // Space between cards
+    padding: 15,
+    flexDirection: 'row', // Arrange icon and text in a row
+    alignItems: 'center', // Center items vertically
+    borderColor: '#ADD8E6', // Light blue border color from the image
+    borderWidth: 2, // Border width
+    // Removed shadow/elevation to match the flat design in the image
   },
-  lessonImage: {
-    width: '100%',
-    height: 160,
-    resizeMode: 'cover',
-  },
-  lessonContent: {
-    padding: 16,
+  lessonIcon: {
+    width: 40,  // Icon size
+    height: 40, // Icon size
+    marginRight: 15, // Space between icon and text
+    resizeMode: 'contain', // Ensure the icon fits
   },
   lessonTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1565C0',
-    marginBottom: 6,
+    color: '#000000', // Black text color
+    fontWeight: 'normal', // Normal font weight as in the image
+    flex: 1, // Allow text to take up remaining space
   },
-  lessonDescription: {
-    fontSize: 14,
-    color: '#555',
-    marginBottom: 12,
-    lineHeight: 20,
-  },
-  lessonMeta: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  metaItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  metaText: {
-    fontSize: 13,
-    color: '#555',
-  },
-  levelText: {
-    fontWeight: 'bold',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
-  beginnerLevel: {
-    color: '#2E7D32',
-    backgroundColor: '#E8F5E9',
-  },
-  intermediateLevel: {
-    color: '#F57C00',
-    backgroundColor: '#FFF3E0',
-  },
-  advancedLevel: {
-    color: '#C62828',
-    backgroundColor: '#FFEBEE',
-  },
+  // Removed lessonImage, lessonContent, lessonDescription, lessonMeta, metaItem, metaText,
+  // levelText, beginnerLevel, intermediateLevel, advancedLevel as they are not relevant to the new design
 });
 
 export default LessonListScreen;

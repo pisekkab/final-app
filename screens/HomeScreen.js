@@ -32,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.content}>
           <Image
             source={require('../assets/images/logo.png')} // Using the provided image as the main visual
-            style={styles.mainImage}
+            style={styles.container}
             resizeMode="contain"
           />
           {/* Based on the image, the text below the FluentUp logo */}
