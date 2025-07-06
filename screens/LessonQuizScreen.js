@@ -248,6 +248,7 @@ const LessonQuizScreen = ({ route, navigation }) => {
         {!showResult ? (
           <View style={styles.quizContainer}>
             <Text style={styles.quizTitle}>{currentQuiz.title}</Text>
+            <Text style={styles.quizSectionTitle}>Part 3: Quiz</Text>
             <View style={styles.questionContainer}>
               <Text style={styles.questionNumber}>
                 Question {currentQuestionIndex + 1} of {currentQuiz.questions.length}
@@ -332,6 +333,16 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     textAlign: 'center',
   },
+    quizSectionTitle: { // New style for "Part 3: Quiz"
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#6A5ACD', // Slate Blue
+    marginBottom: 25,
+    textAlign: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F8FF',
+    paddingBottom: 10,
+    },
   questionContainer: {
     marginBottom: 25,
     backgroundColor: '#E0EFFF', // Alice Blue
