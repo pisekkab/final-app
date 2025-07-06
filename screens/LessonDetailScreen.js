@@ -127,7 +127,7 @@ const LessonDetailScreen = ({ route, navigation }) => {
                   {section.dialogues.map((dialogue, conv_index) => (
                     <View key={conv_index} style={styles.dialogueLine}>
                       {/* Assuming speaker icons will be here, using a generic one for now */}
-                      <Image source={require('../assets/images/speaker_icon.png')} style={styles.dialogueIcon} />
+                      <Image source={require('../assets/images/new_friends.png')} style={styles.dialogueIcon} />
                       <Text style={styles.dialogueText}>
                         <Text style={styles.dialogueSpeaker}>{dialogue.speaker}: </Text>
                         {dialogue.text}
