@@ -20,7 +20,7 @@ const LessonDetailScreen = ({ route, navigation }) => {
       sections: [
         {
           type: 'header',
-          icon: require('../assets/images/conversation_icon.png'), // Placeholder for conversation icon. **คุณต้องมีไฟล์ภาพนี้ใน assets/images**
+          icon: require('../assets/images/new_friends.png'), // Placeholder for conversation icon. **คุณต้องมีไฟล์ภาพนี้ใน assets/images**
           title: 'Conversation Lesson: New Friends',
         },
         {
@@ -162,7 +162,7 @@ const LessonDetailScreen = ({ route, navigation }) => {
                   {section.dialogues.map((dialogue, conv_index) => (
                     <View key={conv_index} style={styles.dialogueLine}>
                       {/* ไอคอนผู้พูด (Placeholder) **คุณต้องมีไฟล์ภาพนี้ใน assets/images** */}
-                      <Image source={require('../assets/images/speaker_icon.png')} style={styles.dialogueIcon} />
+                      <Image source={require('../assets/images/new_friends.png')} style={styles.dialogueIcon} />
                       <Text style={styles.dialogueText}>
                         <Text style={styles.dialogueSpeaker}>{dialogue.speaker}: </Text>
                         {dialogue.text}
