@@ -57,50 +57,168 @@ const LessonDetailScreen = ({ route, navigation }) => {
         },
       ],
     },
-    // ตัวอย่างสำหรับบทเรียนอื่นๆ ที่ไม่ได้เป็น "New Friends"
-    // คุณสามารถปรับแต่งเนื้อหาเหล่านี้ให้เข้ากับแต่ละบทเรียนได้
-    '2': {
+    '2': { // สำหรับ lessonId: '2' (At School)
       mainTitle: 'At School',
       sections: [
         {
-          title: 'ตัวแปรคืออะไร',
-          content:
-            'ตัวแปรคือชื่อที่ใช้เก็บค่าข้อมูลในหน่วยความจำของคอมพิวเตอร์ ซึ่งเราสามารถเรียกใช้และเปลี่ยนแปลงค่าได้ตลอดการทำงานของโปรแกรม',
+          type: 'header',
+          icon: require('../assets/images/at_school.png'), // ใช้ไอคอนโรงเรียน
+          title: 'Conversation Lesson: At School',
         },
         {
-          title: 'ประเภทข้อมูล',
-          content:
-            'ประเภทข้อมูลบอกถึงชนิดของข้อมูลที่เก็บในตัวแปร เช่น ตัวเลขจำนวนเต็ม (Integer), จำนวนจริง (Float), ข้อความ (String), และค่าความจริง (Boolean)',
+          type: 'vocabulary',
+          title: 'Part 1: Vocabulary',
+          data: [
+            { english: 'school', thai: 'โรงเรียน' },
+            { english: 'teacher', thai: 'ครู' },
+            { english: 'student', thai: 'นักเรียน' },
+            { english: 'classroom', thai: 'ห้องเรียน' },
+            { english: 'book', thai: 'หนังสือ' },
+            { english: 'desk', thai: 'โต๊ะ' },
+            { english: 'chair', thai: 'เก้าอี้' },
+            { english: 'pencil', thai: 'ดินสอ' },
+            { english: 'pen', thai: 'ปากกา' },
+            { english: 'notebook', thai: 'สมุด' },
+          ],
+        },
+        {
+          type: 'conversation',
+          title: 'Part 2: Conversation Practice',
+          dialogues: [
+            { speaker: 'A', text: "Good morning, Ben!" },
+            { speaker: 'B', text: "Good morning, Anna!" },
+            { speaker: 'A', text: "Are you ready for school today?" },
+            { speaker: 'B', text: "Yes, I am! I have my books and pencils." },
+            { speaker: 'A', text: "What's your favorite subject?" },
+            { speaker: 'B', text: "I like English. How about you?" },
+            { speaker: 'A', text: "I like Math. Let's go to class." },
+            { speaker: 'B', text: "Ok!" },
+          ],
         },
       ],
     },
-    '3': {
+    '3': { // สำหรับ lessonId: '3' (At a Restaurant)
       mainTitle: 'At a Restaurant',
       sections: [
         {
-          title: 'คำสั่งเงื่อนไข',
-          content:
-            'คำสั่งเงื่อนไขใช้ในการตัดสินใจว่าจะทำงานส่วนใดของโปรแกรม เช่น if-else, switch-case โดยขึ้นอยู่กับเงื่อนไขที่กำหนด',
+          type: 'header',
+          icon: require('../assets/images/at_restaurant.png'), // ใช้ไอคอนร้านอาหาร
+          title: 'Conversation Lesson: At a Restaurant',
+        },
+        {
+          type: 'vocabulary',
+          title: 'Part 1: Vocabulary',
+          data: [
+            { english: 'restaurant', thai: 'ร้านอาหาร' },
+            { english: 'waiter/waitress', thai: 'บริกร' },
+            { english: 'menu', thai: 'เมนูอาหาร' },
+            { english: 'order', thai: 'สั่ง' },
+            { english: 'delicious', thai: 'อร่อย' },
+            { english: 'bill', thai: 'บิล/ใบเสร็จ' },
+            { english: 'table', thai: 'โต๊ะ' },
+            { english: 'chef', thai: 'พ่อครัว' },
+            { english: 'reservation', thai: 'การจอง' },
+            { english: 'tip', thai: 'ทิป' },
+          ],
+        },
+        {
+          type: 'conversation',
+          title: 'Part 2: Conversation Practice',
+          dialogues: [
+            { speaker: 'A', text: "Welcome! Do you have a reservation?" },
+            { speaker: 'B', text: "No, we don't. A table for two, please." },
+            { speaker: 'A', text: "Right this way. Here are your menus." },
+            { speaker: 'B', text: "Thank you. What do you recommend?" },
+            { speaker: 'A', text: "The grilled fish is very popular." },
+            { speaker: 'B', text: "Okay, I'll have the grilled fish and a glass of water." },
+            { speaker: 'A', text: "And for you?" },
+            { speaker: 'C', text: "I'll have the pasta." },
+            { speaker: 'A', text: "Excellent choice!" },
+          ],
         },
       ],
     },
-    '4': {
+    '4': { // สำหรับ lessonId: '4' (Shopping)
       mainTitle: 'Shopping',
       sections: [
         {
-          title: 'ฟังก์ชันคืออะไร',
-          content:
-            'ฟังก์ชันคือกลุ่มคำสั่งที่รวมกันเพื่อทำงานอย่างใดอย่างหนึ่ง ช่วยให้โค้ดเป็นระเบียบและนำกลับมาใช้ใหม่ได้',
+          type: 'header',
+          icon: require('../assets/images/shopping.png'), // ใช้ไอคอนการช้อปปิ้ง
+          title: 'Conversation Lesson: Shopping',
+        },
+        {
+          type: 'vocabulary',
+          title: 'Part 1: Vocabulary',
+          data: [
+            { english: 'shop/store', thai: 'ร้านค้า' },
+            { english: 'customer', thai: 'ลูกค้า' },
+            { english: 'salesperson', thai: 'พนักงานขาย' },
+            { english: 'price', thai: 'ราคา' },
+            { english: 'discount', thai: 'ส่วนลด' },
+            { english: 'cashier', thai: 'แคชเชียร์' },
+            { english: 'receipt', thai: 'ใบเสร็จ' },
+            { english: 'try on', thai: 'ลองสวม' },
+            { english: 'size', thai: 'ขนาด' },
+            { english: 'credit card', thai: 'บัตรเครดิต' },
+          ],
+        },
+        {
+          type: 'conversation',
+          title: 'Part 2: Conversation Practice',
+          dialogues: [
+            { speaker: 'A', text: "Can I help you?" },
+            { speaker: 'B', text: "Yes, please. I'm looking for a new shirt." },
+            { speaker: 'A', text: "What size are you?" },
+            { speaker: 'B', text: "Medium. Do you have this in blue?" },
+            { speaker: 'A', text: "Let me check. Yes, here you go." },
+            { speaker: 'B', text: "Thanks. Can I try it on?" },
+            { speaker: 'A', text: "The fitting rooms are over there." },
+            { speaker: 'B', text: "It fits perfectly! How much is it?" },
+            { speaker: 'A', text: "That's $25." },
+            { speaker: 'B', text: "I'll take it." },
+          ],
         },
       ],
     },
-    '5': {
+    '5': { // สำหรับ lessonId: '5' (Job Interview) - เพิ่มโค้ดใหม่
       mainTitle: 'Job Interview',
       sections: [
         {
-          title: 'โครงสร้างข้อมูล',
-          content:
-            'โครงสร้างข้อมูลคือวิธีการจัดเก็บและจัดการข้อมูลในรูปแบบต่างๆ เช่น อาร์เรย์ ลิงค์ลิสต์ สแตก คิว',
+          type: 'header',
+          icon: require('../assets/images/job_interview.png'), // ใช้ไอคอนการสัมภาษณ์งาน
+          title: 'Conversation Lesson: Job Interview',
+        },
+        {
+          type: 'vocabulary',
+          title: 'Part 1: Vocabulary',
+          data: [
+            { english: 'interview', thai: 'สัมภาษณ์' },
+            { english: 'employer', thai: 'นายจ้าง' },
+            { english: 'applicant', thai: 'ผู้สมัคร' },
+            { english: 'resume', thai: 'เรซูเม่' },
+            { english: 'experience', thai: 'ประสบการณ์' },
+            { english: 'skills', thai: 'ทักษะ' },
+            { english: 'qualifications', thai: 'คุณสมบัติ' },
+            { english: 'strength', thai: 'จุดแข็ง' },
+            { english: 'weakness', thai: 'จุดอ่อน' },
+            { english: 'salary', thai: 'เงินเดือน' },
+          ],
+        },
+        {
+          type: 'conversation',
+          title: 'Part 2: Conversation Practice',
+          dialogues: [
+            { speaker: 'Interviewer', text: "Good morning, please have a seat." },
+            { speaker: 'Applicant', text: "Thank you. Good morning." },
+            { speaker: 'Interviewer', text: "Tell me about yourself." },
+            { speaker: 'Applicant', text: "I'm a recent graduate with a degree in Marketing. I'm highly motivated and eager to learn." },
+            { speaker: 'Interviewer', text: "Why are you interested in this position?" },
+            { speaker: 'Applicant', text: "I'm impressed by your company's innovative approach and I believe my skills align well with the job requirements." },
+            { speaker: 'Interviewer', text: "What are your strengths?" },
+            { speaker: 'Applicant', text: "I'm a good communicator and a quick learner. I'm also very organized." },
+            { speaker: 'Interviewer', text: "Do you have any questions for me?" },
+            { speaker: 'Applicant', text: "Yes, what are the opportunities for growth within the company?" },
+          ],
         },
       ],
     },
@@ -113,7 +231,7 @@ const LessonDetailScreen = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container}>
-        {/* ส่วนหัวด้านบนสุดของหน้าจอ (New Friends) */}
+        {/* ส่วนหัวด้านบนสุดของหน้าจอ (New Friends / At School / At a Restaurant / Shopping / Job Interview) */}
         <View style={styles.topHeader}>
           <Image
             source={lesson.image} // ใช้ไอคอนที่ส่งมาจาก LessonListScreen
@@ -135,7 +253,6 @@ const LessonDetailScreen = ({ route, navigation }) => {
               return (
                 <View key={index} style={styles.section}>
                   <View style={styles.sectionTitleRow}>
-                    {/* คุณสามารถเพิ่มไอคอนหรือสัญลักษณ์เพชรตรงนี้ได้ถ้าต้องการ */}
                     <Text style={styles.sectionTitle}>{section.title}</Text>
                   </View>
                   <View style={styles.vocabularyTable}>
@@ -156,13 +273,12 @@ const LessonDetailScreen = ({ route, navigation }) => {
               return (
                 <View key={index} style={styles.section}>
                    <View style={styles.sectionTitleRow}>
-                    {/* คุณสามารถเพิ่มไอคอนหรือสัญลักษณ์เพชรตรงนี้ได้ถ้าต้องการ */}
                     <Text style={styles.sectionTitle}>{section.title}</Text>
                   </View>
                   {section.dialogues.map((dialogue, conv_index) => (
                     <View key={conv_index} style={styles.dialogueLine}>
-                      {/* ไอคอนผู้พูด (Placeholder) **คุณต้องมีไฟล์ภาพนี้ใน assets/images** */}
-                      <Image source={require('../assets/images/new_friends.png')} style={styles.dialogueIcon} />
+                      {/* ไอคอนผู้พูด (Placeholder) **คุณต้องมีไฟล์ภาพ speaker_icon.png ใน assets/images** */}
+                      <Image source={require('../assets/images/speaker_icon.png')} style={styles.dialogueIcon} />
                       <Text style={styles.dialogueText}>
                         <Text style={styles.dialogueSpeaker}>{dialogue.speaker}: </Text>
                         {dialogue.text}
