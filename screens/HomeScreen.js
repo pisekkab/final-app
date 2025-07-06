@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   Dimensions,
 } from 'react-native';
-import * as SplashScreen from 'expo-splash-screen'; // Keep for consistency, though its direct use might change
+import * as SplashScreen from 'expo-splash-screen';
 
 const { width } = Dimensions.get('window');
 
@@ -22,7 +22,6 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const handleStartPress = () => {
-    // Assuming 'Start!' button navigates to the main part of the app, e.g., LessonList
     navigation.navigate('LessonList');
   };
 
@@ -32,22 +31,17 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.content}>
           <Image
             source={require('../assets/images/logo.png')} // Using the provided image as the main visual
-            style={styles.container}
+            style={styles.mainImage} // ใช้ mainImage style แทน container
             resizeMode="contain"
           />
-          {/* Based on the image, the text below the FluentUp logo */}
           <Text style={styles.appName}>
-            (อีโมจิ) FluentUp (อีโมจิ)
+            ✨ FluentUp ✨
           </Text>
           <Text style={styles.subtitle}>
-            Foreign Language Department
+            Learn English with fun & engaging lessons!
           </Text>
-          <Text style={styles.subtitle}>
-            Chiangkhan School
-          </Text>
-
           <TouchableOpacity style={styles.startButton} onPress={handleStartPress}>
-            <Text style={styles.startButtonText}>Start!</Text>
+            <Text style={styles.startButtonText}>Start Learning!</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -58,48 +52,56 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFFFF', // White background as per the image
+    backgroundColor: '#F8F8FF', // Ghost White
   },
   container: {
     flex: 1,
-    justifyContent: 'center', // Center content vertically
-    alignItems: 'center',     // Center content horizontally
-    backgroundColor: '#FFFFFF', // White background
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F8F8FF', // Ghost White
   },
   content: {
-    alignItems: 'center', // Center items within this view
+    alignItems: 'center',
     padding: 20,
-    width: '80%', // Adjust width as needed
+    width: '90%', // ปรับความกว้างให้พอดีกับหน้าจอมากขึ้น
   },
   mainImage: {
-    width: Dimensions.get('window').width * 0.7, // Make it responsive
-    height: Dimensions.get('window').width * 0.7, // Make it responsive, assuming square
-    marginBottom: 20,
+    width: width * 0.75, // ขนาดใหญ่ขึ้นเล็กน้อย
+    height: width * 0.75,
+    marginBottom: 30, // เพิ่มระยะห่าง
   },
   appName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000000', // Black text
-    marginBottom: 5,
+    fontSize: 28, // ขนาดฟอนต์ใหญ่ขึ้น
+    fontWeight: '700', // เน้นตัวหนาขึ้น
+    color: '#4A4A6A', // Dark Slate Blue
+    marginBottom: 10,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
-    color: '#555555', // Grey text
+    fontSize: 18,
+    color: '#778899', // Light Slate Gray
     textAlign: 'center',
-    marginBottom: 2,
+    marginBottom: 40, // เพิ่มระยะห่างจากปุ่ม
+    lineHeight: 25, // เพิ่มระยะห่างระหว่างบรรทัด
   },
   startButton: {
-    backgroundColor: '#00008B', // Dark blue as seen in the image
-    paddingVertical: 10,
+    backgroundColor: '#A0BBE2', // Periwinkle
+    paddingVertical: 15,
     paddingHorizontal: 30,
-    borderRadius: 5,
-    marginTop: 40, // Space from text
+    borderRadius: 30, // กลมมนมากขึ้น
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#A0BBE2', // เงาให้เข้ากับสีปุ่ม
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 8,
   },
   startButtonText: {
-    color: '#ffffff', // White text
+    color: '#FFFFFF', // ข้อความเป็นสีขาว
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 20,
+    letterSpacing: 0.8,
   },
 });
 

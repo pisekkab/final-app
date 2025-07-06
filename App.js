@@ -9,24 +9,24 @@ import * as SplashScreen from 'expo-splash-screen';
 import HomeScreen from './screens/HomeScreen';
 import LessonListScreen from './screens/LessonListScreen';
 import LessonDetailScreen from './screens/LessonDetailScreen';
-import QuizScreen from './screens/LessonQuizScreen'; // <--- เพิ่มบรรทัดนี้
+import QuizScreen from './screens/LessonQuizScreen';
 
 // รักษา splash screen ไว้จนกว่าจะพร้อม
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createStackNavigator();
 
-// 🎨 ธีมน้ำเงินฟ้าน่ารัก
+// 🎨 ธีมสีใหม่: สวย น่ารัก มินิมอล
 const AppTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: '#E6F2FF',        // ฟ้าอ่อน
-    primary: '#4D9DE0',           // น้ำเงินสว่าง
-    card: '#B3DAF1',              // พื้นหลังการ์ด
-    text: '#2c3e50',              // น้ำเงินเข้ม
-    border: '#A0C4FF',
-    notification: '#4D9DE0',
+    background: '#F8F8FF', // Ghost White - พื้นหลังโดยรวม
+    primary: '#A0BBE2',    // Periwinkle - สีหลัก
+    card: '#E0EFFF',       // Alice Blue - พื้นหลังการ์ด/Element
+    text: '#4A4A6A',       // Dark Slate Blue - สีข้อความเข้ม
+    border: '#D3DDF4',     // Lavender Blue - สีเส้นขอบ
+    notification: '#A0BBE2', // Periwinkle
   },
 };
 
@@ -38,47 +38,49 @@ const App = () => {
         initialRouteName="Home"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#4D9DE0', // น้ำเงินหลัก
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
+            backgroundColor: AppTheme.colors.primary, // ใช้สี primary
+            borderBottomLeftRadius: 25, // เพิ่มความโค้งมน
+            borderBottomRightRadius: 25, // เพิ่มความโค้งมน
             shadowColor: '#000',
-            shadowOpacity: 0.1,
-            shadowRadius: 10,
-            elevation: 5,
+            shadowOffset: { width: 0, height: 3 }, // เงาที่ดูนุ่มนวลขึ้น
+            shadowOpacity: 0.15, // ลดความทึบของเงา
+            shadowRadius: 8,     // รัศมีเงาที่กว้างขึ้น
+            elevation: 6,        // เงาสำหรับ Android
           },
-          headerTintColor: '#fff',
+          headerTintColor: '#FFFFFF', // ข้อความใน header เป็นสีขาว
           headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 22,
+            fontWeight: '600', // ปรับความหนาของฟอนต์
+            fontSize: 20,
             fontFamily: 'sans-serif',
+            letterSpacing: 0.5, // เพิ่มระยะห่างตัวอักษรเล็กน้อย
           },
           cardStyle: {
-            backgroundColor: '#E6F2FF',
+            backgroundColor: AppTheme.colors.background, // พื้นหลังของหน้าจอ
           },
         }}
       >
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: '🏠 หน้าหลัก' }}
+          options={{ title: '👋 Welcome' }} // เปลี่ยนข้อความให้เป็นมิตรขึ้น
         />
         <Stack.Screen
           name="LessonList"
           component={LessonListScreen}
-          options={{ title: '📚 บทเรียนทั้งหมด' }}
+          options={{ title: '📚 All Lessons' }}
         />
         <Stack.Screen
           name="LessonDetail"
           component={LessonDetailScreen}
           options={({ route }) => ({
-            title: `📝 ${route.params?.title || 'บทเรียน'}`,
+            title: `📝 ${route.params?.title || 'Lesson Details'}`,
           })}
         />
-        <Stack.Screen // <--- เพิ่ม Stack.Screen สำหรับ QuizScreen
+        <Stack.Screen
           name="Quiz"
           component={QuizScreen}
           options={({ route }) => ({
-            title: `🧠 ${route.params?.lessonTitle || 'แบบทดสอบ'}`,
+            title: `🧠 ${route.params?.lessonTitle || 'Quiz Time'}`,
           })}
         />
       </Stack.Navigator>
