@@ -7,11 +7,14 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-  Alert, // สำหรับแสดงผลลัพธ์
+  Alert,
 } from 'react-native';
+import { useTheme } from '@react-navigation/native'; // นำเข้า useTheme
+import { Ionicons } from '@expo/vector-icons'; // สำหรับแสดงไอคอนถูก/ผิด
 
 const LessonQuizScreen = ({ route, navigation }) => {
   const { lessonId, lessonTitle } = route.params;
+  const { colors } = useTheme(); // ดึงสีจาก theme
 
   // ข้อมูลคำถามสำหรับแบบทดสอบ (อัปเดตตามคำถามชุดใหม่ที่คุณให้มา)
   const quizData = {
@@ -20,7 +23,7 @@ const LessonQuizScreen = ({ route, navigation }) => {
       questions: [
         {
           id: 'q1',
-          question: "A:\n________? \nB: My name is Ben.",
+          question: "A: ________? \nB: My name is Ben.",
           options: ["A. Where are you from?", "B. How are you?", "C. What’s your name?", "D. How old are you?"],
           correctAnswer: "C. What’s your name?",
         },
@@ -32,21 +35,21 @@ const LessonQuizScreen = ({ route, navigation }) => {
         },
         {
           id: 'q3',
-          question: "A:\n________? \nB: I’m 13 years old.",
-          options: ["A. How are you?", "B. Where are you from?", "C. What’s your name?", "D. How old are you?"],
-          correctAnswer: "D. How old are you?",
+          question: "A: ________? \nB: I'm 13 years old.",
+          options: ["A. What’s your name?", "B. How old are you?", "C. Where are you from?", "D. What’s your hobby?"],
+          correctAnswer: "B. How old are you?",
         },
         {
           id: 'q4',
-          question: "A: Where are you from? \nB: ________",
-          options: ["A. I like badminton.", "B. I’m from Thailand.", "C. I’m 13.", "D. I’m fine."],
-          correctAnswer: "B. I’m from Thailand.",
+          question: "A: What do you like to do? \nB: ________",
+          options: ["A. I like pizza.", "B. I like playing football.", "C. I like to sleep.", "D. I like to study."],
+          correctAnswer: "B. I like playing football.",
         },
         {
           id: 'q5',
-          question: "A: What do you like to do? \nB: ________",
-          options: ["A. I’m from Singapore.", "B. I like drawing.", "C. I’m 14.", "D. I’m a student."],
-          correctAnswer: "B. I like drawing.",
+          question: "A: Where are you from? \nB: ________",
+          options: ["A. I'm from school.", "B. I'm from home.", "C. I'm from Thailand.", "D. I'm from the shop."],
+          correctAnswer: "C. I'm from Thailand.",
         },
       ],
     },
@@ -55,33 +58,33 @@ const LessonQuizScreen = ({ route, navigation }) => {
       questions: [
         {
           id: 'q1',
-          question: "A: Good morning, class! \nB: ________",
-          options: ["A. Hello, friend!", "B. Good morning, teacher!", "C. I’m fine.", "D. What page?"],
-          correctAnswer: "B. Good morning, teacher!",
+          question: "What do students use to write?",
+          options: ['A. Book', 'B. Pencil', 'C. Desk', 'D. Chair'],
+          correctAnswer: 'B. Pencil',
         },
         {
           id: 'q2',
-          question: "A: ________? \nB: English!",
-          options: ["A. What subject do we have today?", "B. What food do you like?", "C. How are you today?", "D. Where is your bag?"],
-          correctAnswer: "A. What subject do we have today?",
+          question: "Who teaches students at school?",
+          options: ['A. Student', 'B. Teacher', 'C. Chef', 'D. Waiter'],
+          correctAnswer: 'B. Teacher',
         },
         {
           id: 'q3',
-          question: "A: Please open your books. \nB: ________",
-          options: ["A. What page?", "B. I don’t want to.", "C. See you later.", "D. Thank you!"],
-          correctAnswer: "A. What page?",
+          question: "Where do students study?",
+          options: ['A. Restaurant', 'B. Shopping mall', 'C. Classroom', 'D. Park'],
+          correctAnswer: 'C. Classroom',
         },
         {
           id: 'q4',
-          question: "A: Do we have homework today? \nB: ________",
-          options: ["A. No class today.", "B. Yes, write five sentences in English.", "C. Go to page ten.", "D. Let’s take a break."],
-          correctAnswer: "B. Yes, write five sentences in English.",
+          question: "Which of these is a school supply?",
+          options: ['A. Menu', 'B. Receipt', 'C. Notebook', 'D. Bill'],
+          correctAnswer: 'C. Notebook',
         },
         {
           id: 'q5',
-          question: "A: What do we do now? \nB: ________",
-          options: ["A. Close your eyes.", "B. Write sentences in English.", "C. Eat lunch.", "D. Clean the classroom."],
-          correctAnswer: "B. Write sentences in English.",
+          question: "What do you sit on in a classroom?",
+          options: ['A. Desk', 'B. Book', 'C. Chair', 'D. Pencil'],
+          correctAnswer: 'C. Chair',
         },
       ],
     },
@@ -90,206 +93,254 @@ const LessonQuizScreen = ({ route, navigation }) => {
       questions: [
         {
           id: 'q1',
-          question: "A: ________? \nB: A table for two, please.",
-          options: ["A. What would you like to order?", "B. Where are you from?", "C. How many people?", "D. What’s your favorite food?"],
-          correctAnswer: "C. How many people?",
+          question: "Who takes your food order at a restaurant?",
+          options: ['A. Chef', 'B. Customer', 'C. Waiter/Waitress', 'D. Manager'],
+          correctAnswer: 'C. Waiter/Waitress',
         },
         {
           id: 'q2',
-          question: "A: What do you recommend? \nB: ________",
-          options: ["A. I don’t like food.", "B. Our grilled chicken is very popular.", "C. I’m from Thailand.", "D. Just water, please."],
-          correctAnswer: "B. Our grilled chicken is very popular.",
+          question: "What do you read to choose your food?",
+          options: ['A. Bill', 'B. Menu', 'C. Receipt', 'D. Book'],
+          correctAnswer: 'B. Menu',
         },
         {
           id: 'q3',
-          question: "A: ________? \nB: I’ll have the grilled chicken and a Coke.",
-          options: ["A. What do you want to drink?", "B. What’s your name?", "C. Where do you live?", "D. Would you like to order now?"],
-          correctAnswer: "D. Would you like to order now?",
+          question: "What do you ask for after you finish eating?",
+          options: ['A. Menu', 'B. Order', 'C. Bill', 'D. Reservation'],
+          correctAnswer: 'C. Bill',
         },
         {
           id: 'q4',
-          question: "A: Would you like some dessert? \nB: ________",
-          options: ["A. Yes, I am.", "B. No, thank you.", "C. I have a Coke.", "D. Chicken please."],
-          correctAnswer: "B. No, thank you.",
+          question: "If the food is very good, you might say it's ________.",
+          options: ['A. Bad', 'B. Cold', 'C. Delicious', 'D. Expensive'],
+          correctAnswer: 'C. Delicious',
         },
         {
           id: 'q5',
-          question: "A: ________? \nB: Just the bill, please.",
-          options: ["A. What’s your phone number?", "B. Would you like anything else?", "C. How was the food?", "D. What would you like to eat?"],
-          correctAnswer: "B. Would you like anything else?",
+          question: "You make a ________ to secure a table in advance.",
+          options: ['A. Order', 'B. Payment', 'C. Reservation', 'D. Tip'],
+          correctAnswer: 'C. Reservation',
         },
       ],
     },
-    '4': { // สำหรับ lessonId: '4' (Shopping) - อัปเดตคำถามใหม่
+    '4': { // สำหรับ lessonId: '4' (Shopping)
       title: 'แบบทดสอบ: Shopping',
       questions: [
         {
           id: 'q1',
-          question: "What does 'discount' mean?",
-          options: ["A. เพิ่ม", "B. ลดราคา", "C. ขายหมด", "D. เปลี่ยนสินค้า"],
-          correctAnswer: "B. ลดราคา",
+          question: "What is the money you pay for an item called?",
+          options: ['A. Discount', 'B. Price', 'C. Receipt', 'D. Tip'],
+          correctAnswer: 'B. Price',
         },
         {
           id: 'q2',
-          question: "A:___________________?\nB: It’s 300 baht.",
-          options: ["A. How old are you?", "B. How much is it?", "C. Do you like it?", "D. Where is it?"],
-          correctAnswer: "B. How much is it?",
+          question: "Who helps you find clothes in a shop?",
+          options: ['A. Customer', 'B. Cashier', 'C. Salesperson', 'D. Chef'],
+          correctAnswer: 'C. Salesperson',
         },
         {
           id: 'q3',
-          question: "A:___________________?\nB: Sure. The fitting room is over there.",
-          options: ["A. Can I try it on", "B. Can I get a discount?", "C. How much is it?", "D. Where is it?"],
-          correctAnswer: "A. Can I try it on",
+          question: "Where do you go to see if clothes fit you?",
+          options: ['A. Checkout', 'B. Fitting room', 'C. Restaurant', 'D. School'],
+          correctAnswer: 'B. Fitting room',
         },
         {
           id: 'q4',
-          question: "A: I can give you 10% off.\nB: _____________________.",
-          options: ["A. It’s over there.", "B. Great! I’ll take it. Thank you.", "C. Sure.", "D. Your welcome"],
-          correctAnswer: "B. Great! I’ll take it. Thank you.",
+          question: "What do you get after you buy something, showing proof of purchase?",
+          options: ['A. Menu', 'B. Bill', 'C. Receipt', 'D. Order'],
+          correctAnswer: 'C. Receipt',
         },
         {
           id: 'q5',
-          question: "A: _____________?\nB: I can give you 10% off.",
-          options: ["A. I like it. Can I try it on?", "B. I like it. Can I get a discount?", "C. I like it. Can I buy it?", "D. I like it. Can I pay now?"],
-          correctAnswer: "B. I like it. Can I get a discount?",
+          question: "When an item is cheaper, it has a ________.",
+          options: ['A. Price', 'B. Size', 'C. Discount', 'D. Card'],
+          correctAnswer: 'C. Discount',
         },
       ],
     },
-    '5': { // สำหรับ lessonId: '5' (Job Interview) - อัปเดตคำถามใหม่
+    '5': { // สำหรับ lessonId: '5' (Job Interview) - อัปเดตข้อมูลใหม่
       title: 'แบบทดสอบ: Job Interview',
       questions: [
         {
           id: 'q1',
-          question: "A:___________________?\nB: I want to gain experience.",
+          question: "A: ________? \nB: I want to gain experience.",
           options: ["A. What do you like to eat?", "B. Why do you want this job?", "C. How much is your salary?", "D. Where do you live?"],
           correctAnswer: "B. Why do you want this job?",
         },
         {
           id: 'q2',
-          question: "A:___________________?\nB: My name is Tom. I’m 18 years old.",
+          question: "A: ________? \nB: My name is Tom. I’m 18 years old.",
           options: ["A. What’s your name?", "B. How old are you?", "C. Tell me about yourself.", "D. Where are you from?"],
           correctAnswer: "C. Tell me about yourself.",
         },
         {
           id: 'q3',
-          question: "A:___________________?\nB: I’m hard-working and friendly.",
+          question: "A: ________? \nB: I’m hard-working and friendly.",
           options: ["A. What’s your hobby?", "B. What is your strength?", "C. Where do you work?", "D. How do you travel?"],
           correctAnswer: "B. What is your strength?",
         },
         {
           id: 'q4',
-          question: "A: Can you tell me about yourself?\nB: _____________________.",
+          question: "A: Can you tell me about yourself? \nB: ________",
           options: ["A. I like pizza.", "B. I’m from Chiang Mai.", "C. I’m 18 and just finished high school.", "D. I don’t like interviews."],
           correctAnswer: "C. I’m 18 and just finished high school.",
         },
         {
           id: 'q5',
-          question: "A: A: Why should we hire you?\nB: _____________________.",
+          question: "A: Why should we hire you? \nB: ________",
           options: ["A. Because I need a job.", "B. Because I’m responsible and eager to learn.", "C. Because my mom told me.", "D. Because it’s close to my house."],
           correctAnswer: "B. Because I’m responsible and eager to learn.",
         },
       ],
     },
-    // คุณสามารถเพิ่ม quizData สำหรับ lessonId อื่นๆ ได้ที่นี่
   };
 
-  const currentQuiz = quizData[lessonId] || { title: 'ไม่พบแบบทดสอบ', questions: [] };
+  const currentQuiz = quizData[lessonId];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isOptionSubmitted, setIsOptionSubmitted] = useState(false); // สถานะเพื่อแสดงเฉลย
   const [score, setScore] = useState(0);
-  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [showResult, setShowResult] = useState(false);
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-  };
-
-  const handleNextQuestion = () => {
-    // ตรวจสอบคำตอบเมื่อไปยังคำถามถัดไป
-    if (selectedOption === currentQuiz.questions[currentQuestionIndex].correctAnswer) {
-      setScore(score + 1);
-    }
-
-    if (currentQuestionIndex < currentQuiz.questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption(null); // ล้างตัวเลือกที่เลือกไว้สำหรับคำถามถัดไป
-    } else {
-      setQuizCompleted(true);
-    }
-  };
-
-  const handleRetakeQuiz = () => {
+  useEffect(() => {
+    // Reset quiz state when lessonId changes
     setCurrentQuestionIndex(0);
     setSelectedOption(null);
+    setIsOptionSubmitted(false);
     setScore(0);
-    setQuizCompleted(false);
-  };
+    setShowResult(false);
+  }, [lessonId]);
 
-  if (!currentQuiz.questions || currentQuiz.questions.length === 0) {
+  if (!currentQuiz) {
     return (
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
         <View style={styles.container}>
-          <Text style={styles.noQuizText}>ขออภัย ไม่พบแบบทดสอบสำหรับบทเรียนนี้</Text>
+          <Text style={[styles.errorText, { color: colors.danger }]}>ไม่พบแบบทดสอบสำหรับบทเรียนนี้</Text>
           <TouchableOpacity
-            style={styles.backButton}
+            style={[styles.retakeButton, { backgroundColor: colors.primary }]}
             onPress={() => navigation.goBack()}
           >
-            <Text style={styles.backButtonText}>ย้อนกลับ</Text>
+            <Text style={styles.retakeButtonText}>กลับไปยังบทเรียน</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
   }
 
+  const handleOptionPress = (option) => {
+    if (!isOptionSubmitted) { // อนุญาตให้เลือกได้ถ้ายังไม่ได้กดส่ง
+      setSelectedOption(option);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (selectedOption === null) {
+      Alert.alert('กรุณาเลือกคำตอบ', 'โปรดเลือกหนึ่งตัวเลือกก่อนกดถัดไป');
+      return;
+    }
+
+    const currentQuestion = currentQuiz.questions[currentQuestionIndex];
+    if (!isOptionSubmitted) { // ถ้ายังไม่ได้กดส่ง แสดงเฉลยก่อน
+      setIsOptionSubmitted(true);
+      if (selectedOption === currentQuestion.correctAnswer) {
+        setScore(score + 1);
+      }
+    } else { // ถ้ากดส่งแล้ว ไปคำถามถัดไป
+      if (currentQuestionIndex < currentQuiz.questions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setSelectedOption(null);
+        setIsOptionSubmitted(false); // Reset for next question
+      } else {
+        setShowResult(true);
+      }
+    }
+  };
+
+  const handleRetakeQuiz = () => {
+    setCurrentQuestionIndex(0);
+    setSelectedOption(null);
+    setIsOptionSubmitted(false);
+    setScore(0);
+    setShowResult(false);
+  };
+
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.quizTitle}>{currentQuiz.title}</Text>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={[styles.container, { backgroundColor: colors.card }]}>
+          <Text style={[styles.quizTitle, { color: colors.text }]}>{currentQuiz.title}</Text>
 
-        {quizCompleted ? (
-          <View style={styles.resultContainer}>
-            <Text style={styles.resultText}>แบบทดสอบเสร็จสิ้น!</Text>
-            <Text style={styles.scoreText}>คุณได้คะแนน: {score} / {currentQuiz.questions.length}</Text>
-            <TouchableOpacity style={styles.retakeButton} onPress={handleRetakeQuiz}>
-              <Text style={styles.retakeButtonText}>ทำแบบทดสอบใหม่</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-              <Text style={styles.backButtonText}>กลับสู่บทเรียน</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionNumber}>คำถามที่ {currentQuestionIndex + 1} / {currentQuiz.questions.length}</Text>
-            <Text style={styles.questionText}>{currentQuestion.question}</Text>
-
-            <View style={styles.optionsContainer}>
-              {currentQuestion.options.map((option, index) => (
+          {showResult ? (
+            <View style={[styles.resultContainer, { backgroundColor: colors.background, borderColor: colors.primary }]}>
+              <Text style={[styles.resultText, { color: colors.text }]}>แบบทดสอบเสร็จสมบูรณ์!</Text>
+              <Text style={[styles.scoreText, { color: colors.primary }]}>คุณได้ {score} คะแนน จาก {currentQuiz.questions.length}</Text>
+              <View style={styles.resultButtons}>
                 <TouchableOpacity
-                  key={index}
-                  style={[
-                    styles.optionButton,
-                    selectedOption === option && styles.selectedOption,
-                  ]}
-                  onPress={() => handleOptionSelect(option)}
+                  style={[styles.retakeButton, { backgroundColor: colors.accent }]}
+                  onPress={handleRetakeQuiz}
                 >
-                  <Text style={styles.optionText}>{option}</Text>
+                  <Text style={styles.retakeButtonText}>ทำแบบทดสอบอีกครั้ง</Text>
                 </TouchableOpacity>
-              ))}
+                <TouchableOpacity
+                  style={[styles.retakeButton, { backgroundColor: colors.border }]}
+                  onPress={() => navigation.goBack()}
+                >
+                  <Text style={[styles.retakeButtonText, { color: colors.text }]}>กลับไปยังบทเรียน</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-
-            <TouchableOpacity
-              style={styles.submitButton}
-              onPress={handleNextQuestion}
-              disabled={selectedOption === null} // ปุ่มจะกดไม่ได้ถ้ายังไม่เลือกตัวเลือก
-            >
-              <Text style={styles.submitButtonText}>
-                {currentQuestionIndex === currentQuiz.questions.length - 1 ? 'ส่งคำตอบ' : 'คำถามถัดไป'}
+          ) : (
+            <View style={styles.questionContainer}>
+              <Text style={[styles.questionNumber, { color: colors.text }]}>
+                คำถามที่ {currentQuestionIndex + 1} จาก {currentQuiz.questions.length}
               </Text>
-            </TouchableOpacity>
-          </View>
-        )}
+              <Text style={[styles.questionText, { color: colors.text }]}>
+                {currentQuestion.question}
+              </Text>
+              <View style={styles.optionsContainer}>
+                {currentQuestion.options.map((option, index) => {
+                  const isCorrect = isOptionSubmitted && option === currentQuestion.correctAnswer;
+                  const isWrong = isOptionSubmitted && selectedOption === option && option !== currentQuestion.correctAnswer;
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      style={[
+                        styles.optionButton,
+                        { backgroundColor: colors.background, borderColor: colors.border },
+                        selectedOption === option && styles.selectedOption,
+                        isCorrect && styles.correctOption,
+                        isWrong && styles.wrongOption,
+                      ]}
+                      onPress={() => handleOptionPress(option)}
+                      disabled={isOptionSubmitted} // ปิดการเลือกหลังจากกดส่ง
+                    >
+                      <Text style={[styles.optionText, { color: colors.text }]}>{option}</Text>
+                      {isCorrect && <Ionicons name="checkmark-circle" size={24} color="#28A745" style={styles.feedbackIcon} />}
+                      {isWrong && <Ionicons name="close-circle" size={24} color="#DC3545" style={styles.feedbackIcon} />}
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+              <TouchableOpacity
+                style={[
+                  styles.submitButton,
+                  { backgroundColor: selectedOption ? colors.primary : colors.border },
+                ]}
+                onPress={handleSubmit}
+                disabled={selectedOption === null}
+              >
+                <Text style={styles.submitButtonText}>
+                  {isOptionSubmitted
+                    ? (currentQuestionIndex === currentQuiz.questions.length - 1 ? 'ดูผลลัพธ์' : 'คำถามถัดไป')
+                    : 'ส่งคำตอบ'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -298,80 +349,95 @@ const LessonQuizScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#E0F2FE', // Background similar to LessonDetailScreen
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 20,
   },
   container: {
-    flexGrow: 1,
-    padding: 20,
+    width: '90%',
     alignItems: 'center',
-    backgroundColor: '#ffffff', // White background for the main content
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    marginTop: 0,
-    paddingTop: 30,
+    borderRadius: 20,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 6,
+    borderWidth: 1, // เพิ่ม border
   },
   quizTitle: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
-    color: '#1E3A8A',
-    marginBottom: 20,
+    marginBottom: 25,
     textAlign: 'center',
-  },
-  noQuizText: {
-    fontSize: 18,
-    color: '#555',
-    textAlign: 'center',
-    marginTop: 50,
   },
   questionContainer: {
     width: '100%',
-    backgroundColor: '#F0F9FF',
-    borderRadius: 15,
-    padding: 20,
     marginBottom: 20,
-    shadowColor: '#60A5FA',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
   },
   questionNumber: {
-    fontSize: 14,
-    color: '#64748B',
+    fontSize: 16,
     marginBottom: 10,
-    textAlign: 'right',
+    textAlign: 'center',
   },
   questionText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#333333',
     marginBottom: 20,
+    lineHeight: 26,
+    textAlign: 'center',
   },
   optionsContainer: {
-    marginBottom: 20,
+    width: '100%',
   },
   optionButton: {
-    backgroundColor: '#E6F2FF', // Light blue for options
     padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
+    borderRadius: 12,
+    marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#B3DAF1', // Slightly darker blue border
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2,
   },
   selectedOption: {
-    backgroundColor: '#B3DAF1', // Darker blue when selected
-    borderColor: '#4D9DE0',
+    backgroundColor: '#FFE5B4', // สีส้มนุ่มๆ เมื่อเลือก
+    borderColor: '#FFBB70',
+  },
+  correctOption: {
+    backgroundColor: '#D4EDDA', // สีเขียวอ่อนเมื่อถูก
+    borderColor: '#28A745',
+  },
+  wrongOption: {
+    backgroundColor: '#F8D7DA', // สีแดงอ่อนเมื่อผิด
+    borderColor: '#DC3545',
   },
   optionText: {
     fontSize: 16,
-    color: '#2c3e50',
+    flexShrink: 1,
+  },
+  feedbackIcon: {
+    marginLeft: 10,
   },
   submitButton: {
-    backgroundColor: '#4D9DE0', // Primary blue button
     paddingVertical: 15,
-    borderRadius: 12,
+    borderRadius: 15,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
+    width: '80%',
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   submitButtonText: {
     color: '#ffffff',
@@ -380,47 +446,52 @@ const styles = StyleSheet.create({
   },
   resultContainer: {
     alignItems: 'center',
-    marginTop: 50,
-    padding: 20,
-    backgroundColor: '#F0F9FF',
-    borderRadius: 15,
+    padding: 25,
+    borderRadius: 20,
     width: '100%',
-    shadowColor: '#60A5FA',
-    shadowOffset: { width: 0, height: 2 },
+    borderWidth: 2, // เพิ่ม border
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 5,
   },
   resultText: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#1E3A8A',
     marginBottom: 10,
   },
   scoreText: {
-    fontSize: 20,
-    color: '#28A745', // Green for score
+    fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 30,
   },
+  resultButtons: {
+    width: '100%',
+    alignItems: 'center',
+  },
   retakeButton: {
-    backgroundColor: '#28A745', // Green for retake
     paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    marginTop: 20,
-    marginBottom: 10,
+    paddingHorizontal: 25,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 15,
+    width: '80%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
   },
-  backButton: {
-    backgroundColor: '#6C757D', // Grey for back button
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    marginTop: 10,
-  },
-  backButtonText: {
+  retakeButtonText: {
     color: '#ffffff',
+    fontWeight: 'bold',
     fontSize: 16,
+  },
+  errorText: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 50,
     fontWeight: 'bold',
   },
 });

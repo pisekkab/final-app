@@ -1,3 +1,4 @@
+// screens/LessonListScreen.js
 import React from 'react';
 import {
   View,
@@ -8,59 +9,72 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
+import { useTheme } from '@react-navigation/native'; // นำเข้า useTheme
 
 const LessonListScreen = ({ navigation }) => {
-  // Updated lessons array to match the image content
+  const { colors } = useTheme(); // ดึงสีจาก theme
+
   const lessons = [
     {
       id: '1',
       title: 'New Friends',
-      image: require('../assets/images/new_friends.png'), // Placeholder, replace with actual path
-      // Removed description, duration, level as they are not in the image
+      description: 'เรียนรู้ประโยคและคำศัพท์ง่ายๆ ในการทำความรู้จักเพื่อนใหม่',
+      image: require('../assets/images/new_friends.png'), // สมมติว่ามีภาพที่น่ารักสำหรับบทนี้
     },
     {
       id: '2',
       title: 'At School',
-      image: require('../assets/images/at_school.png'), // Placeholder, replace with actual path
+      description: 'คำศัพท์และประโยคที่ใช้บ่อยในโรงเรียนและห้องเรียน',
+      image: require('../assets/images/at_school.png'),
     },
     {
       id: '3',
       title: 'At a Restaurant',
-      image: require('../assets/images/at_restaurant.png'), // Placeholder, replace with actual path
+      description: 'สั่งอาหาร ถามราคา และสนทนาในร้านอาหาร',
+      image: require('../assets/images/restaurant.png'),
     },
     {
       id: '4',
       title: 'Shopping',
-      image: require('../assets/images/shopping.png'), // Placeholder, replace with actual path
+      description: 'การซื้อของ ถามราคา และการต่อรอง',
+      image: require('../assets/images/shopping.png'),
     },
     {
       id: '5',
       title: 'Job Interview',
-      image: require('../assets/images/job_interview.png'), // Placeholder, replace with actual path
+      description: 'เตรียมพร้อมสำหรับการสัมภาษณ์งานด้วยประโยคสำคัญ',
+      image: require('../assets/images/job_interview.png'),
     },
+    // เพิ่มบทเรียนอื่นๆ ที่มี LessonQuiz ได้ที่นี่
   ];
 
   const renderLessonItem = ({ item }) => (
     <TouchableOpacity
-      style={styles.lessonCard}
+      style={[styles.lessonCard, { backgroundColor: colors.card, borderColor: colors.border }]}
       onPress={() =>
         navigation.navigate('LessonDetail', {
-          id: item.id,
+          lesson: item, // ส่ง object lesson ทั้งหมดไป
           title: item.title,
-          lesson: item, // Pass the whole item for detail screen
+          lessonId: item.id, // ส่ง lessonId ไปด้วย
         })
       }
     >
-      <Image source={item.image} style={styles.lessonIcon} />
-      <Text style={styles.lessonTitle}>{item.title}</Text>
-      {/* Removed description, duration, and level display */}
+      <Image source={item.image} style={styles.lessonImage} />
+      <View style={styles.lessonContent}>
+        <Text style={[styles.lessonTitle, { color: colors.text }]}>{item.title}</Text>
+        <Text style={[styles.lessonDescription, { color: colors.text }]}>{item.description}</Text>
+        <TouchableOpacity
+          style={[styles.quizButton, { backgroundColor: colors.accent }]}
+          onPress={() => navigation.navigate('LessonQuiz', { lessonId: item.id, lessonTitle: item.title })}
+        >
+          <Text style={styles.quizButtonText}>ทำแบบทดสอบ 🧠</Text>
+        </TouchableOpacity>
+      </View>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Removed header and subheader text */}
-
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
       <FlatList
         data={lessons}
         renderItem={renderLessonItem}
@@ -72,42 +86,59 @@ const LessonListScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff', // Changed to white background based on the image
-    padding: 16,
   },
-  // Removed headerText and subheaderText styles as they are no longer used
-
   listContainer: {
-    paddingBottom: 20,
-    paddingTop: 10, // Added some top padding to separate from top edge
+    padding: 15,
+    paddingTop: 10,
   },
   lessonCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 10, // Slightly rounded corners
-    marginBottom: 15, // Space between cards
-    padding: 15,
-    flexDirection: 'row', // Arrange icon and text in a row
-    alignItems: 'center', // Center items vertically
-    borderColor: '#ADD8E6', // Light blue border color from the image
-    borderWidth: 2, // Border width
-    // Removed shadow/elevation to match the flat design in the image
+    borderRadius: 15,
+    marginBottom: 15,
+    overflow: 'hidden',
+    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
-  lessonIcon: {
-    width: 40,  // Icon size
-    height: 40, // Icon size
-    marginRight: 15, // Space between icon and text
-    resizeMode: 'contain', // Ensure the icon fits
+  lessonImage: {
+    width: '100%',
+    height: 150,
+    resizeMode: 'cover',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  lessonContent: {
+    padding: 15,
   },
   lessonTitle: {
-    fontSize: 18,
-    color: '#000000', // Black text color
-    fontWeight: 'normal', // Normal font weight as in the image
-    flex: 1, // Allow text to take up remaining space
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
   },
-  // Removed lessonImage, lessonContent, lessonDescription, lessonMeta, metaItem, metaText,
-  // levelText, beginnerLevel, intermediateLevel, advancedLevel as they are not relevant to the new design
+  lessonDescription: {
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 15,
+  },
+  quizButton: {
+    paddingVertical: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  quizButtonText: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
 });
 
 export default LessonListScreen;
