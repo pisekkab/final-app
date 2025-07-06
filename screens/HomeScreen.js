@@ -31,7 +31,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.content}>
           <Image
-            source={require('../assets/images/image_8555a0.png')} // Using the provided image as the main visual
+            source={require('../assets/images/logo.png')} // Using the provided image as the main visual
             style={styles.mainImage}
             resizeMode="contain"
           />
