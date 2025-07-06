@@ -1,3 +1,4 @@
+// App.js
 import React, { useEffect } from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import HomeScreen from './screens/HomeScreen';
 import LessonListScreen from './screens/LessonListScreen';
 import LessonDetailScreen from './screens/LessonDetailScreen';
+import QuizScreen from './screens/QuizScreen'; // <--- เพิ่มบรรทัดนี้
 
 // รักษา splash screen ไว้จนกว่าจะพร้อม
 SplashScreen.preventAutoHideAsync();
@@ -70,6 +72,13 @@ const App = () => {
           component={LessonDetailScreen}
           options={({ route }) => ({
             title: `📝 ${route.params?.title || 'บทเรียน'}`,
+          })}
+        />
+        <Stack.Screen // <--- เพิ่ม Stack.Screen สำหรับ QuizScreen
+          name="Quiz"
+          component={QuizScreen}
+          options={({ route }) => ({
+            title: `🧠 ${route.params?.lessonTitle || 'แบบทดสอบ'}`,
           })}
         />
       </Stack.Navigator>

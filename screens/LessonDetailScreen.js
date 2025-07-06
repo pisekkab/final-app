@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image, // Still needed if you decide to add icons for conversation
+  Image,
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
@@ -12,13 +12,15 @@ import {
 const LessonDetailScreen = ({ route, navigation }) => {
   const { lesson } = route.params;
 
+  // ข้อมูลเนื้อหาบทเรียนสำหรับแต่ละ ID
+  // คุณสามารถเพิ่มข้อมูลสำหรับบทเรียนอื่นๆ ได้ที่นี่
   const lessonContent = {
-    '1': { // Assuming 'New Friends' corresponds to id '1' from LessonListScreen
-      mainTitle: 'New Friends', // Main title for the screen
+    '1': { // สำหรับ lessonId: '1' (New Friends)
+      mainTitle: 'New Friends', // ชื่อหลักสำหรับหน้าจอ
       sections: [
         {
           type: 'header',
-          icon: require('../assets/images/new_friends.png'), // Placeholder for conversation icon
+          icon: require('../assets/images/conversation_icon.png'), // Placeholder for conversation icon. **คุณต้องมีไฟล์ภาพนี้ใน assets/images**
           title: 'Conversation Lesson: New Friends',
         },
         {
@@ -55,8 +57,10 @@ const LessonDetailScreen = ({ route, navigation }) => {
         },
       ],
     },
-    // Keep original structure for other lessons if they still exist or handle a default
+    // ตัวอย่างสำหรับบทเรียนอื่นๆ ที่ไม่ได้เป็น "New Friends"
+    // คุณสามารถปรับแต่งเนื้อหาเหล่านี้ให้เข้ากับแต่ละบทเรียนได้
     '2': {
+      mainTitle: 'At School',
       sections: [
         {
           title: 'ตัวแปรคืออะไร',
@@ -70,20 +74,49 @@ const LessonDetailScreen = ({ route, navigation }) => {
         },
       ],
     },
-    // ... add content for other lessons as needed
+    '3': {
+      mainTitle: 'At a Restaurant',
+      sections: [
+        {
+          title: 'คำสั่งเงื่อนไข',
+          content:
+            'คำสั่งเงื่อนไขใช้ในการตัดสินใจว่าจะทำงานส่วนใดของโปรแกรม เช่น if-else, switch-case โดยขึ้นอยู่กับเงื่อนไขที่กำหนด',
+        },
+      ],
+    },
+    '4': {
+      mainTitle: 'Shopping',
+      sections: [
+        {
+          title: 'ฟังก์ชันคืออะไร',
+          content:
+            'ฟังก์ชันคือกลุ่มคำสั่งที่รวมกันเพื่อทำงานอย่างใดอย่างหนึ่ง ช่วยให้โค้ดเป็นระเบียบและนำกลับมาใช้ใหม่ได้',
+        },
+      ],
+    },
+    '5': {
+      mainTitle: 'Job Interview',
+      sections: [
+        {
+          title: 'โครงสร้างข้อมูล',
+          content:
+            'โครงสร้างข้อมูลคือวิธีการจัดเก็บและจัดการข้อมูลในรูปแบบต่างๆ เช่น อาร์เรย์ ลิงค์ลิสต์ สแตก คิว',
+        },
+      ],
+    },
   };
 
-  // Get content based on the lesson ID passed from LessonListScreen
+  // ดึงเนื้อหาตาม ID ของบทเรียนที่ส่งมา
   const currentLessonContent = lessonContent[lesson.id] || { sections: [] };
-  const displayTitle = currentLessonContent.mainTitle || lesson.title; // Use mainTitle if available, else lesson.title
+  const displayTitle = currentLessonContent.mainTitle || lesson.title; // ใช้ mainTitle ถ้ามี มิฉะนั้นใช้ lesson.title
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container}>
-        {/* Main Title at the very top, mimicking the image */}
+        {/* ส่วนหัวด้านบนสุดของหน้าจอ (New Friends) */}
         <View style={styles.topHeader}>
           <Image
-            source={lesson.image} // Use the icon passed from LessonListScreen
+            source={lesson.image} // ใช้ไอคอนที่ส่งมาจาก LessonListScreen
             style={styles.topHeaderIcon}
           />
           <Text style={styles.topHeaderText}>{displayTitle}</Text>
@@ -102,6 +135,7 @@ const LessonDetailScreen = ({ route, navigation }) => {
               return (
                 <View key={index} style={styles.section}>
                   <View style={styles.sectionTitleRow}>
+                    {/* คุณสามารถเพิ่มไอคอนหรือสัญลักษณ์เพชรตรงนี้ได้ถ้าต้องการ */}
                     <Text style={styles.sectionTitle}>{section.title}</Text>
                   </View>
                   <View style={styles.vocabularyTable}>
@@ -122,12 +156,13 @@ const LessonDetailScreen = ({ route, navigation }) => {
               return (
                 <View key={index} style={styles.section}>
                    <View style={styles.sectionTitleRow}>
+                    {/* คุณสามารถเพิ่มไอคอนหรือสัญลักษณ์เพชรตรงนี้ได้ถ้าต้องการ */}
                     <Text style={styles.sectionTitle}>{section.title}</Text>
                   </View>
                   {section.dialogues.map((dialogue, conv_index) => (
                     <View key={conv_index} style={styles.dialogueLine}>
-                      {/* Assuming speaker icons will be here, using a generic one for now */}
-                      <Image source={require('../assets/images/new_friends.png')} style={styles.dialogueIcon} />
+                      {/* ไอคอนผู้พูด (Placeholder) **คุณต้องมีไฟล์ภาพนี้ใน assets/images** */}
+                      <Image source={require('../assets/images/speaker_icon.png')} style={styles.dialogueIcon} />
                       <Text style={styles.dialogueText}>
                         <Text style={styles.dialogueSpeaker}>{dialogue.speaker}: </Text>
                         {dialogue.text}
@@ -137,7 +172,7 @@ const LessonDetailScreen = ({ route, navigation }) => {
                 </View>
               );
             } else {
-              // Default rendering for other lesson types (e.g., from original code)
+              // การแสดงผลเริ่มต้นสำหรับบทเรียนประเภทอื่นๆ (หากไม่ได้กำหนด type)
               return (
                 <View key={index} style={styles.section}>
                   <Text style={styles.sectionTitle}>{section.title}</Text>
@@ -147,7 +182,16 @@ const LessonDetailScreen = ({ route, navigation }) => {
             }
           })}
 
-          <TouchableOpacity style={styles.testButton}>
+          {/* ปุ่มทำแบบทดสอบ */}
+          <TouchableOpacity
+            style={styles.testButton}
+            onPress={() =>
+              navigation.navigate('Quiz', {
+                lessonId: lesson.id,
+                lessonTitle: lesson.title, // ส่ง title ไปแสดงบน header ของ QuizScreen
+              })
+            }
+          >
             <Text style={styles.testButtonText}>ทำแบบทดสอบ</Text>
           </TouchableOpacity>
         </View>
@@ -159,7 +203,7 @@ const LessonDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#E0F2FE', // Light blue background
+    backgroundColor: '#E0F2FE', // สีฟ้าอ่อนสำหรับพื้นหลัง
   },
   container: {
     flex: 1,
@@ -169,8 +213,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     paddingBottom: 10,
-    backgroundColor: '#E0F2FE', // Match safeArea background
-    // No explicit border or shadow here, matching the image
+    backgroundColor: '#E0F2FE', // สีเดียวกับ safeArea
   },
   topHeaderIcon: {
     width: 40,
@@ -181,13 +224,12 @@ const styles = StyleSheet.create({
   topHeaderText: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#000000', // Black color for the text "New Friends"
+    color: '#000000', // สีดำสำหรับข้อความ "New Friends"
   },
   contentContainer: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#ffffff', // White background for the main content area
-    // Remove specific border radiuses and shadows that are not in the new design
+    backgroundColor: '#ffffff', // พื้นหลังสีขาวสำหรับพื้นที่เนื้อหาหลัก
   },
   lessonHeader: {
     flexDirection: 'row',
@@ -195,7 +237,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#D1D5DB', // Light grey line
+    borderBottomColor: '#D1D5DB', // เส้นสีเทาอ่อน
   },
   lessonHeaderIcon: {
     width: 30,
@@ -206,7 +248,7 @@ const styles = StyleSheet.create({
   lessonHeaderText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333333', // Dark grey for the header "Conversation Lesson: New Friends"
+    color: '#333333', // สีเทาเข้มสำหรับหัวข้อ "Conversation Lesson: New Friends"
   },
   section: {
     marginBottom: 20,
@@ -216,19 +258,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  // Example for adding a bullet point (diamond in the image)
-  sectionBullet: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#00BFFF', // Light blue for the bullet/diamond
-    marginRight: 8,
-    transform: [{ rotate: '45deg' }], // Rotate to make it a diamond
-  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333333', // Dark grey for section titles
+    color: '#333333', // สีเทาเข้มสำหรับหัวข้อส่วนต่างๆ
   },
   vocabularyTable: {
     borderWidth: 1,
@@ -239,7 +272,7 @@ const styles = StyleSheet.create({
   },
   tableHeaderRow: {
     flexDirection: 'row',
-    backgroundColor: '#F0F0F0', // Light grey header background
+    backgroundColor: '#F0F0F0', // พื้นหลังส่วนหัวตารางสีเทาอ่อน
     borderBottomWidth: 1,
     borderColor: '#D1D5DB',
   },
@@ -270,18 +303,22 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginRight: 8,
-    marginTop: 2, // Align with text
+    marginTop: 2, // จัดตำแหน่งให้ตรงกับข้อความ
     resizeMode: 'contain',
   },
   dialogueText: {
     fontSize: 16,
     color: '#333333',
-    flexShrink: 1, // Allow text to wrap
+    flexShrink: 1, // อนุญาตให้ข้อความขึ้นบรรทัดใหม่
   },
   dialogueSpeaker: {
     fontWeight: 'bold',
   },
-  // Retaining existing test button styles, or adjust as needed
+  sectionContent: { // สำหรับเนื้อหาบทเรียนอื่นๆ ที่ไม่ใช่ New Friends
+    fontSize: 16,
+    color: '#374151',
+    lineHeight: 24,
+  },
   testButton: {
     backgroundColor: '#3B82F6',
     paddingVertical: 14,
@@ -300,7 +337,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  // Removed other unused styles like lessonImage, metaContainer, description, divider, etc.
 });
 
 export default LessonDetailScreen;
